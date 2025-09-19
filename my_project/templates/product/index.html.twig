@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Продукти{% endblock %}
+
+{% block body %}
+    <h1>Список продуктів</h1>
+    <ul>
+        {% for id, product in products %}
+            <li>{{ id }} – {{ product }}</li>
+        {% else %}
+            <li>Немає продуктів</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
