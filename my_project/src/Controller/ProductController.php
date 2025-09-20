@@ -10,14 +10,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class ProductController extends AbstractController
 {
-
     private array $products = [
         1 => 'Торт Київський',
         2 => 'Торт Наполеон',
         3 => 'Торт Медовик',
     ];
 
-    //браузер
     #[Route('/product', name: 'product_index_browser', methods: ['GET'])]
     public function indexBrowser(): Response
     {
@@ -45,14 +43,14 @@ class ProductController extends AbstractController
             'message' => 'Продукт створено',
             'id' => $newId,
             'name' => $name,
-        ]);
+        ], Response::HTTP_CREATED);
     }
 
     #[Route('/api/products/{id}', name: 'product_update', methods: ['PUT'])]
     public function update(Request $request, int $id): JsonResponse
     {
         if (!isset($this->products[$id])) {
-            return $this->json(['error' => 'Продукт не знайдено'], 404);
+            return $this->json(['error' => 'Продукт не знайдено'], Response::HTTP_NOT_FOUND);
         }
 
         $data = json_decode($request->getContent(), true);
@@ -69,14 +67,11 @@ class ProductController extends AbstractController
     public function delete(int $id): JsonResponse
     {
         if (!isset($this->products[$id])) {
-            return $this->json(['error' => 'Продукт не знайдено'], 404);
+            return $this->json(['error' => 'Продукт не знайдено'], Response::HTTP_NOT_FOUND);
         }
 
         unset($this->products[$id]);
 
-        return $this->json([
-            'message' => 'Продукт видалено',
-            'id' => $id,
-        ]);
+        return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }
 }
