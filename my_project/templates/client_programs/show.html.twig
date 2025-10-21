@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ClientPrograms{% endblock %}
+
+{% block body %}
+    <h1>ClientPrograms</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ client_program.id }}</td>
+            </tr>
+            <tr>
+                <th>Client_id</th>
+                <td>{{ client_program.clientId }}</td>
+            </tr>
+            <tr>
+                <th>Program_id</th>
+                <td>{{ client_program.programId }}</td>
+            </tr>
+            <tr>
+                <th>Start_date</th>
+                <td>{{ client_program.startDate ? client_program.startDate|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>End_date</th>
+                <td>{{ client_program.endDate ? client_program.endDate|date('Y-m-d') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_client_programs_index') }}">back to list</a>
+
+    <a href="{{ path('app_client_programs_edit', {'id': client_program.id}) }}">edit</a>
+
+    {{ include('client_programs/_delete_form.html.twig') }}
+{% endblock %}

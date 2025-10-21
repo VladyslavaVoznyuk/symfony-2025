@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Programs{% endblock %}
+
+{% block body %}
+    <h1>Programs</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ program.id }}</td>
+            </tr>
+            <tr>
+                <th>Name</th>
+                <td>{{ program.name }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ program.description }}</td>
+            </tr>
+            <tr>
+                <th>Duration_weeks</th>
+                <td>{{ program.durationWeeks }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_programs_index') }}">back to list</a>
+
+    <a href="{{ path('app_programs_edit', {'id': program.id}) }}">edit</a>
+
+    {{ include('programs/_delete_form.html.twig') }}
+{% endblock %}
