@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ClientPrograms index{% endblock %}
+
+{% block body %}
+    <h1>ClientPrograms index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Client_id</th>
+                <th>Program_id</th>
+                <th>Start_date</th>
+                <th>End_date</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for client_program in client_programs %}
+            <tr>
+                <td>{{ client_program.id }}</td>
+                <td>{{ client_program.clientId }}</td>
+                <td>{{ client_program.programId }}</td>
+                <td>{{ client_program.startDate ? client_program.startDate|date('Y-m-d') : '' }}</td>
+                <td>{{ client_program.endDate ? client_program.endDate|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_client_programs_show', {'id': client_program.id}) }}">show</a>
+                    <a href="{{ path('app_client_programs_edit', {'id': client_program.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_client_programs_new') }}">Create new</a>
+{% endblock %}
