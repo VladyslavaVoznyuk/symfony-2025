@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Programs;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * @extends ServiceEntityRepository<Programs>
@@ -16,28 +17,42 @@ class ProgramsRepository extends ServiceEntityRepository
         parent::__construct($registry, Programs::class);
     }
 
-    //    /**
-    //     * @return Programs[] Returns an array of Programs objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('p.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+    /**
+     *
+     * @param array $data
+     * @param int $itemsPerPage
+     * @param int $page
+     * @return array
+     */
+    public function getAllProgramsByFilter(array $data, int $itemsPerPage, int $page): array
+    {
+        $queryBuilder = $this->createQueryBuilder('p');
 
-    //    public function findOneBySomeField($value): ?Programs
-    //    {
-    //        return $this->createQueryBuilder('p')
-    //            ->andWhere('p.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+        if (!empty($data['name'])) {
+            $queryBuilder->andWhere('p.name LIKE :name')
+                ->setParameter('name', '%' . $data['name'] . '%');
+        }
+
+        if (!empty($data['duration_weeks'])) {
+            $queryBuilder->andWhere('p.duration_weeks = :duration')
+                ->setParameter('duration', $data['duration_weeks']);
+        }
+
+        $queryBuilder->orderBy('p.name', 'ASC');
+
+        $paginator = new Paginator($queryBuilder->getQuery());
+        $totalItems = count($paginator);
+        $pagesCount = ceil($totalItems / $itemsPerPage);
+
+        $paginator
+            ->getQuery()
+            ->setFirstResult($itemsPerPage * (max(1, $page) - 1))
+            ->setMaxResults($itemsPerPage);
+
+        return [
+            'programs' => $paginator->getQuery()->getResult(),
+            'totalPageCount' => (int)$pagesCount,
+            'totalItems' => $totalItems
+        ];
+    }
 }

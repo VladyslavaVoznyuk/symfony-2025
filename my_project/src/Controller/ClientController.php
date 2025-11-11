@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ClientRepository; // Додано
 use App\Service\ClientService;
 use App\Service\RequestCheckerService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,20 +16,24 @@ use Exception;
 #[Route('/api/clients')]
 class ClientController extends AbstractController
 {
+    private const ITEMS_PER_PAGE = 20;
     public const REQUIRED_FIELDS_FOR_CREATE = ['firstName', 'lastName', 'email', 'phone'];
 
     private ClientService $clientService;
     private RequestCheckerService $requestCheckerService;
     private EntityManagerInterface $entityManager;
+    private ClientRepository $clientRepository; // Додано
 
     public function __construct(
         ClientService $clientService,
         RequestCheckerService $requestCheckerService,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
+        ClientRepository $clientRepository // Ін'єкція репозиторію
     ) {
         $this->clientService = $clientService;
         $this->requestCheckerService = $requestCheckerService;
         $this->entityManager = $entityManager;
+        $this->clientRepository = $clientRepository; // Присвоєння
     }
 
     #[Route('', methods: ['POST'])]
@@ -49,10 +54,24 @@ class ClientController extends AbstractController
     }
 
     #[Route('', methods: ['GET'])]
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $clients = $this->clientService->getAllClients();
-        return new JsonResponse($clients, Response::HTTP_OK);
+        $requestData = $request->query->all();
+
+        $itemsPerPage = (int)($requestData['itemsPerPage'] ?? self::ITEMS_PER_PAGE);
+        $page = (int)($requestData['page'] ?? 1);
+
+        unset($requestData['itemsPerPage'], $requestData['page']);
+        $filters = $requestData;
+
+        $clientsData = $this->clientRepository->getAllClientsByFilter(
+            $filters,
+            $itemsPerPage,
+            $page
+        );
+
+
+        return new JsonResponse($clientsData, Response::HTTP_OK);
     }
 
     #[Route('/{id}', methods: ['GET'])]

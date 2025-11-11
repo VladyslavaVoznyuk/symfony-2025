@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\EqipmentRepository; // Додано
 use App\Service\RequestCheckerService;
 use App\Service\EqipmentService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,19 +16,45 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/api/eqipments')]
 final class EqipmentController extends AbstractController
 {
+    private const ITEMS_PER_PAGE = 20; // Константа для пагінації
     private const REQUIRED_FIELDS_FOR_CREATE_EQIPMENT = ['name', 'type', 'condition', 'quantity'];
     private const REQUIRED_FIELDS_FOR_UPDATE_EQIPMENT = ['name', 'type', 'condition', 'quantity'];
 
+    private readonly EqipmentService $eqipmentService;
+    private readonly RequestCheckerService $requestCheckerService;
+    private readonly EntityManagerInterface $entityManager;
+    private readonly EqipmentRepository $eqipmentRepository; // Додано
+
     public function __construct(
-        private readonly EqipmentService $eqipmentService,
-        private readonly RequestCheckerService $requestCheckerService,
-        private readonly EntityManagerInterface $entityManager
-    ) {}
+        EqipmentService $eqipmentService,
+        RequestCheckerService $requestCheckerService,
+        EntityManagerInterface $entityManager,
+        EqipmentRepository $eqipmentRepository
+    ) {
+        $this->eqipmentService = $eqipmentService;
+        $this->requestCheckerService = $requestCheckerService;
+        $this->entityManager = $entityManager;
+        $this->eqipmentRepository = $eqipmentRepository;
+    }
 
     #[Route('', name: 'app_eqipment_index', methods: ['GET'])]
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        return new JsonResponse($this->eqipmentService->getAllEqipments(), Response::HTTP_OK);
+        $requestData = $request->query->all();
+
+        $itemsPerPage = (int)($requestData['itemsPerPage'] ?? self::ITEMS_PER_PAGE);
+        $page = (int)($requestData['page'] ?? 1);
+
+        unset($requestData['itemsPerPage'], $requestData['page']);
+        $filters = $requestData;
+
+        $eqipmentsData = $this->eqipmentRepository->getAllEqipmentsByFilter(
+            $filters,
+            $itemsPerPage,
+            $page
+        );
+
+        return new JsonResponse($eqipmentsData, Response::HTTP_OK);
     }
 
     /**

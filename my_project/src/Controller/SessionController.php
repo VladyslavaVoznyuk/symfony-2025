@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\SessionRepository; // Додано
 use App\Service\RequestCheckerService;
 use App\Service\SessionService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,19 +16,45 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/api/sessions')]
 final class SessionController extends AbstractController
 {
+    private const ITEMS_PER_PAGE = 20;
     private const REQUIRED_FIELDS_FOR_CREATE_SESSION = ['trainer_id', 'client_name', 'date', 'duration'];
     private const REQUIRED_FIELDS_FOR_UPDATE_SESSION = ['trainer_id', 'client_name', 'date', 'duration'];
 
+    private readonly SessionService $sessionService;
+    private readonly RequestCheckerService $requestCheckerService;
+    private readonly EntityManagerInterface $entityManager;
+    private readonly SessionRepository $sessionRepository;
+
     public function __construct(
-        private readonly SessionService $sessionService,
-        private readonly RequestCheckerService $requestCheckerService,
-        private readonly EntityManagerInterface $entityManager
-    ) {}
+        SessionService $sessionService,
+        RequestCheckerService $requestCheckerService,
+        EntityManagerInterface $entityManager,
+        SessionRepository $sessionRepository
+    ) {
+        $this->sessionService = $sessionService;
+        $this->requestCheckerService = $requestCheckerService;
+        $this->entityManager = $entityManager;
+        $this->sessionRepository = $sessionRepository;
+    }
 
     #[Route('', name: 'app_session_index', methods: ['GET'])]
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        return new JsonResponse($this->sessionService->getAllSessions(), Response::HTTP_OK);
+        $requestData = $request->query->all();
+
+        $itemsPerPage = (int)($requestData['itemsPerPage'] ?? self::ITEMS_PER_PAGE);
+        $page = (int)($requestData['page'] ?? 1);
+
+        unset($requestData['itemsPerPage'], $requestData['page']);
+        $filters = $requestData;
+
+        $sessionsData = $this->sessionRepository->getAllSessionsByFilter(
+            $filters,
+            $itemsPerPage,
+            $page
+        );
+
+        return new JsonResponse($sessionsData, Response::HTTP_OK);
     }
 
     /**
