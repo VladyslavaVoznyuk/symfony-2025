@@ -3,79 +3,101 @@
 namespace App\Controller;
 
 use App\Entity\Trainers;
-use App\Form\TrainersType;
-use App\Repository\TrainersRepository;
+use App\Service\RequestCheckerService;
+use App\Service\TrainerService;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/trainers')]
+#[Route('/api/trainers')]
 final class TrainersController extends AbstractController
 {
-    #[Route(name: 'app_trainers_index', methods: ['GET'])]
-    public function index(TrainersRepository $trainersRepository): Response
+    private const REQUIRED_FIELDS_FOR_CREATE_TRAINER = ['name', 'specialization', 'experience', 'phone'];
+    private const REQUIRED_FIELDS_FOR_UPDATE_TRAINER = ['name', 'specialization', 'experience', 'phone'];
+
+    public function __construct(
+        private readonly TrainerService $trainerService,
+        private readonly RequestCheckerService $requestCheckerService,
+        private readonly EntityManagerInterface $entityManager
+    ) {}
+
+
+    #[Route('', name: 'app_trainers_index', methods: ['GET'])]
+    public function index(): JsonResponse
     {
-        return $this->render('trainers/index.html.twig', [
-            'trainers' => $trainersRepository->findAll(),
-        ]);
+        $trainers = $this->trainerService->getAllTrainers();
+        return new JsonResponse($trainers, Response::HTTP_OK);
     }
 
-    #[Route('/new', name: 'app_trainers_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+
+    #[Route('', name: 'app_trainers_create', methods: ['POST'])]
+    public function create(Request $request): JsonResponse
     {
-        $trainer = new Trainers();
-        $form = $this->createForm(TrainersType::class, $trainer);
-        $form->handleRequest($request);
+        $requestData = json_decode($request->getContent(), true);
+        $this->requestCheckerService->check($requestData, self::REQUIRED_FIELDS_FOR_CREATE_TRAINER);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($trainer);
-            $entityManager->flush();
+        $trainer = $this->trainerService->createTrainer(
+            $requestData['name'],
+            $requestData['specialization'],
+            $requestData['experience'],
+            $requestData['phone']
+        );
 
-            return $this->redirectToRoute('app_trainers_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('trainers/new.html.twig', [
-            'trainer' => $trainer,
-            'form' => $form,
-        ]);
+        $this->entityManager->flush();
+        return new JsonResponse($trainer, Response::HTTP_CREATED);
     }
+
 
     #[Route('/{id}', name: 'app_trainers_show', methods: ['GET'])]
-    public function show(Trainers $trainer): Response
+    public function show(int $id): JsonResponse
     {
-        return $this->render('trainers/show.html.twig', [
-            'trainer' => $trainer,
-        ]);
-    }
+        $trainer = $this->trainerService->getTrainerById($id);
 
-    #[Route('/{id}/edit', name: 'app_trainers_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Trainers $trainer, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(TrainersType::class, $trainer);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_trainers_index', [], Response::HTTP_SEE_OTHER);
+        if (!$trainer) {
+            return new JsonResponse(['error' => 'Trainer not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $this->render('trainers/edit.html.twig', [
-            'trainer' => $trainer,
-            'form' => $form,
-        ]);
+        return new JsonResponse($trainer, Response::HTTP_OK);
     }
 
-    #[Route('/{id}', name: 'app_trainers_delete', methods: ['POST'])]
-    public function delete(Request $request, Trainers $trainer, EntityManagerInterface $entityManager): Response
+
+    #[Route('/{id}', name: 'app_trainers_update', methods: ['PUT'])]
+    public function update(int $id, Request $request): JsonResponse
     {
-        if ($this->isCsrfTokenValid('delete'.$trainer->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($trainer);
-            $entityManager->flush();
+        $requestData = json_decode($request->getContent(), true);
+        $this->requestCheckerService->check($requestData, self::REQUIRED_FIELDS_FOR_UPDATE_TRAINER);
+
+        $trainer = $this->trainerService->updateTrainer(
+            $id,
+            $requestData['name'],
+            $requestData['specialization'],
+            $requestData['experience'],
+            $requestData['phone']
+        );
+
+        if (!$trainer) {
+            return new JsonResponse(['error' => 'Trainer not found'], Response::HTTP_NOT_FOUND);
         }
 
-        return $this->redirectToRoute('app_trainers_index', [], Response::HTTP_SEE_OTHER);
+        $this->entityManager->flush();
+        return new JsonResponse($trainer, Response::HTTP_OK);
+    }
+
+
+    #[Route('/{id}', name: 'app_trainers_delete', methods: ['DELETE'])]
+    public function delete(int $id): JsonResponse
+    {
+        $deleted = $this->trainerService->deleteTrainer($id);
+
+        if (!$deleted) {
+            return new JsonResponse(['error' => 'Trainer not found'], Response::HTTP_NOT_FOUND);
+        }
+
+        $this->entityManager->flush();
+        return new JsonResponse(['message' => 'Trainer deleted successfully'], Response::HTTP_OK);
     }
 }

@@ -6,6 +6,7 @@ use App\Repository\ProgramsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProgramsRepository::class)]
 class Programs
@@ -16,12 +17,20 @@ class Programs
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 255)]
     private string $name;
 
     #[ORM\Column(type: "text")]
+    #[Assert\NotNull]
+    #[Assert\NotBlank]
     private string $description;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull]
+    #[Assert\NotBlank]
+    #[Assert\Regex(pattern: '/^\d+$/', message: "Тривалість повинна бути числом у тижнях.")]
     private string $duration_weeks;
 
     #[ORM\OneToMany(targetEntity: ClientPrograms::class, mappedBy: "program")]
@@ -40,30 +49,11 @@ class Programs
         $this->trainerPrograms = new ArrayCollection();
     }
 
-    public function getId(): ?int {
-        return $this->id;
-    }
-    public function getName(): string {
-        return $this->name;
-    }
-    public function setName(string $name): static {
-        $this->name = $name;
-        return $this;
-    }
-
-    public function getDescription(): string {
-        return $this->description;
-    }
-    public function setDescription(string $description): static {
-        $this->description = $description;
-        return $this;
-    }
-
-    public function getDurationWeeks(): string {
-        return $this->duration_weeks;
-    }
-    public function setDurationWeeks(string $duration_weeks): static {
-        $this->duration_weeks = $duration_weeks;
-        return $this;
-    }
+    public function getId(): ?int { return $this->id; }
+    public function getName(): string { return $this->name; }
+    public function setName(string $name): static { $this->name = $name; return $this; }
+    public function getDescription(): string { return $this->description; }
+    public function setDescription(string $description): static { $this->description = $description; return $this; }
+    public function getDurationWeeks(): string { return $this->duration_weeks; }
+    public function setDurationWeeks(string $duration_weeks): static { $this->duration_weeks = $duration_weeks; return $this; }
 }

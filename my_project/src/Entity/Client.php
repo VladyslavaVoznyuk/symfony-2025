@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 class Client
@@ -15,15 +16,26 @@ class Client
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 255)]
     private string $first_name;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull]
+    #[Assert\NotBlank]
+    #[Assert\Length(min: 2, max: 255)]
     private string $last_name;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
+    #[Assert\NotNull]
+    #[Assert\NotBlank]
+    #[Assert\Email]
     private string $email;
 
     #[ORM\Column(type: "date")]
+    #[Assert\NotNull]
+    #[Assert\Type(\DateTimeInterface::class)]
     private \DateTimeInterface $birth_date;
 
     #[ORM\OneToMany(targetEntity: Payments::class, mappedBy: "client", cascade: ['persist', 'remove'])]
@@ -47,81 +59,20 @@ class Client
     }
 
     public function getId(): ?int { return $this->id; }
+    public function getFirstName(): string { return $this->first_name; }
+    public function setFirstName(string $first_name): static { $this->first_name = $first_name; return $this; }
 
-    public function getFirstName(): string
-    {
-        return $this->first_name;
-    }
-    public function setFirstName(string $first_name): static {
-        $this->first_name = $first_name;
-        return $this;
-    }
+    public function getLastName(): string { return $this->last_name; }
+    public function setLastName(string $last_name): static { $this->last_name = $last_name; return $this; }
 
-    public function getLastName(): string {
-        return $this->last_name;
-    }
-    public function setLastName(string $last_name): static {
-        $this->last_name = $last_name;
-        return $this;
-    }
+    public function getEmail(): string { return $this->email; }
+    public function setEmail(string $email): static { $this->email = $email; return $this; }
 
-    public function getEmail(): string {
-        return $this->email;
-    }
-    public function setEmail(string $email): static {
-        $this->email = $email;
-        return $this;
-    }
+    public function getBirthDate(): \DateTimeInterface { return $this->birth_date; }
+    public function setBirthDate(\DateTimeInterface $birth_date): static { $this->birth_date = $birth_date; return $this; }
 
-    public function getBirthDate(): \DateTimeInterface {
-        return $this->birth_date;
-    }
-    public function setBirthDate(\DateTimeInterface $birth_date): static {
-        $this->birth_date = $birth_date;
-        return $this;
-    }
-
-    public function getPayments(): Collection {
-        return $this->payments;
-    }
-    public function addPayment(Payments $payment): void
-    {
-        if (!$this->payments->contains($payment)) {
-            $this->payments->add($payment);
-            $payment->setClient($this);
-        }
-    }
-
-    public function getClientPrograms(): Collection {
-        return $this->clientPrograms;
-    }
-    public function addClientProgram(ClientPrograms $clientProgram): void
-    {
-        if (!$this->clientPrograms->contains($clientProgram)) {
-            $this->clientPrograms->add($clientProgram);
-            $clientProgram->setClient($this);
-        }
-    }
-
-    public function getClientSessions(): Collection {
-        return $this->clientSessions;
-    }
-    public function addClientSession(ClientSession $clientSession): void
-    {
-        if (!$this->clientSessions->contains($clientSession)) {
-            $this->clientSessions->add($clientSession);
-            $clientSession->setClient($this);
-        }
-    }
-
-    public function getAttendances(): Collection {
-        return $this->attendances;
-    }
-    public function addAttendance(Attendance $attendance): void
-    {
-        if (!$this->attendances->contains($attendance)) {
-            $this->attendances->add($attendance);
-            $attendance->setClient($this);
-        }
-    }
+    public function getPayments(): Collection { return $this->payments; }
+    public function getClientPrograms(): Collection { return $this->clientPrograms; }
+    public function getClientSessions(): Collection { return $this->clientSessions; }
+    public function getAttendances(): Collection { return $this->attendances; }
 }
