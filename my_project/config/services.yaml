@@ -19,6 +19,15 @@ services:
             - '../src/DependencyInjection/'
             - '../src/Entity/'
             - '../src/Kernel.php'
+    App\EventListener\RuntimeConstraintExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
+
+    App\Service\RequestCheckerService: ~
+
+App\Services\:
+    resource: '../src/Services/*'
+    public: false
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

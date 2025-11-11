@@ -3,80 +3,56 @@
 namespace App\Service;
 
 use App\Entity\Session;
+use App\Entity\Programs;
+use App\Entity\Trainers;
+use App\Service\RequestCheckerService;
 use Doctrine\ORM\EntityManagerInterface;
 
 class SessionService
 {
     private EntityManagerInterface $em;
+    private RequestCheckerService $requestChecker;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, RequestCheckerService $requestChecker)
     {
         $this->em = $em;
+        $this->requestChecker = $requestChecker;
     }
 
-    public function getAll(): array
+    public function createSession(\DateTimeInterface $sessionDate, string $durationMinutes, Programs $program, Trainers $trainer): Session
     {
-        return $this->em->getRepository(Session::class)->findAll();
-    }
-
-    public function create(array $data): Session
-    {
-        $session = new Session();
-
-        $session->setProgramId($data['program_id']);
-        $session->setTrainerId($data['trainer_id']);
-        $session->setSessionDate(new \DateTime($data['session_date']));
-        $session->setDurationMinutes($data['duration_minutes']);
-
-        $this->em->persist($session);
+        $s = $this->createSessionObject($sessionDate, $durationMinutes, $program, $trainer);
+        $this->requestChecker->validateRequestDataByConstraints($s);
+        $this->em->persist($s);
         $this->em->flush();
-
-        return $session;
+        return $s;
     }
 
-    public function update(int $id, array $data): ?Session
+    private function createSessionObject(\DateTimeInterface $sessionDate, string $durationMinutes, Programs $program, Trainers $trainer): Session
     {
-        $session = $this->em->getRepository(Session::class)->find($id);
-        if (!$session) {
-            return null;
-        }
+        $s = new Session();
+        $s->setSessionDate($sessionDate)
+            ->setDurationMinutes($durationMinutes)
+            ->setProgram($program)
+            ->setTrainer($trainer);
+        return $s;
+    }
 
-        if (isset($data['program_id'])) {
-            $session->setProgramId($data['program_id']);
+    public function updateSession(Session $session, array $data): void
+    {
+        foreach ($data as $k => $v) {
+            $method = 'set' . str_replace('_', '', ucwords($k, '_'));
+            if (method_exists($session, $method)) {
+                $session->$method($v);
+            }
         }
-
-        if (isset($data['trainer_id'])) {
-            $session->setTrainerId($data['trainer_id']);
-        }
-
-        if (isset($data['session_date'])) {
-            $session->setSessionDate(new \DateTime($data['session_date']));
-        }
-
-        if (isset($data['duration_minutes'])) {
-            $session->setDurationMinutes($data['duration_minutes']);
-        }
-
+        $this->requestChecker->validateRequestDataByConstraints($session);
         $this->em->flush();
-
-        return $session;
     }
 
-    public function delete(int $id): bool
+    public function deleteSession(Session $session): void
     {
-        $session = $this->em->getRepository(Session::class)->find($id);
-        if (!$session) {
-            return false;
-        }
-
         $this->em->remove($session);
         $this->em->flush();
-
-        return true;
-    }
-
-    public function getById(int $id): ?Session
-    {
-        return $this->em->getRepository(Session::class)->find($id);
     }
 }

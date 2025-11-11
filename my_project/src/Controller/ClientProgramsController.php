@@ -2,80 +2,76 @@
 
 namespace App\Controller;
 
-use App\Entity\ClientPrograms;
-use App\Form\ClientProgramsType;
-use App\Repository\ClientProgramsRepository;
+use App\Services\ClientPrograms\ClientProgramsService;
+use App\Services\RequestCheckerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Exception;
 
 #[Route('/client/programs')]
 final class ClientProgramsController extends AbstractController
 {
-    #[Route(name: 'app_client_programs_index', methods: ['GET'])]
-    public function index(ClientProgramsRepository $clientProgramsRepository): Response
-    {
-        return $this->render('client_programs/index.html.twig', [
-            'client_programs' => $clientProgramsRepository->findAll(),
-        ]);
+    private EntityManagerInterface $entityManager;
+    private ClientProgramsService $clientProgramsService;
+    private RequestCheckerService $requestCheckerService;
+
+    public function __construct(
+        EntityManagerInterface $entityManager,
+        ClientProgramsService $clientProgramsService,
+        RequestCheckerService $requestCheckerService
+    ) {
+        $this->entityManager = $entityManager;
+        $this->clientProgramsService = $clientProgramsService;
+        $this->requestCheckerService = $requestCheckerService;
     }
 
-    #[Route('/new', name: 'app_client_programs_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    /**
+     * @throws Exception
+     */
+    #[Route('', name: 'app_client_programs_create', methods: ['POST'])]
+    public function create(Request $request): JsonResponse
     {
-        $clientProgram = new ClientPrograms();
-        $form = $this->createForm(ClientProgramsType::class, $clientProgram);
-        $form->handleRequest($request);
+        $data = json_decode($request->getContent(), true);
+        $this->requestCheckerService->check($data, ['client', 'program', 'startDate', 'endDate']);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($clientProgram);
-            $entityManager->flush();
+        $program = $this->clientProgramsService->createClientProgram(
+            $data['client'],
+            $data['program'],
+            $data['startDate'],
+            $data['endDate']
+        );
 
-            return $this->redirectToRoute('app_client_programs_index', [], Response::HTTP_SEE_OTHER);
-        }
+        $this->entityManager->flush();
 
-        return $this->render('client_programs/new.html.twig', [
-            'client_program' => $clientProgram,
-            'form' => $form,
-        ]);
+        return new JsonResponse($program, Response::HTTP_CREATED);
     }
 
-    #[Route('/{id}', name: 'app_client_programs_show', methods: ['GET'])]
-    public function show(ClientPrograms $clientProgram): Response
+    #[Route('', name: 'app_client_programs_index', methods: ['GET'])]
+    public function index(): JsonResponse
     {
-        return $this->render('client_programs/show.html.twig', [
-            'client_program' => $clientProgram,
-        ]);
+        return new JsonResponse($this->clientProgramsService->getAll());
     }
 
-    #[Route('/{id}/edit', name: 'app_client_programs_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, ClientPrograms $clientProgram, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}', name: 'app_client_programs_update', methods: ['PUT'])]
+    public function update(int $id, Request $request): JsonResponse
     {
-        $form = $this->createForm(ClientProgramsType::class, $clientProgram);
-        $form->handleRequest($request);
+        $data = json_decode($request->getContent(), true);
+        $program = $this->clientProgramsService->updateClientProgram($id, $data);
+        $this->entityManager->flush();
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_client_programs_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('client_programs/edit.html.twig', [
-            'client_program' => $clientProgram,
-            'form' => $form,
-        ]);
+        return new JsonResponse($program);
     }
 
-    #[Route('/{id}', name: 'app_client_programs_delete', methods: ['POST'])]
-    public function delete(Request $request, ClientPrograms $clientProgram, EntityManagerInterface $entityManager): Response
+    #[Route('/{id}', name: 'app_client_programs_delete', methods: ['DELETE'])]
+    public function delete(int $id): JsonResponse
     {
-        if ($this->isCsrfTokenValid('delete'.$clientProgram->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($clientProgram);
-            $entityManager->flush();
-        }
+        $this->clientProgramsService->deleteClientProgram($id);
+        $this->entityManager->flush();
 
-        return $this->redirectToRoute('app_client_programs_index', [], Response::HTTP_SEE_OTHER);
+        return new JsonResponse(null, Response::HTTP_NO_CONTENT);
     }
 }

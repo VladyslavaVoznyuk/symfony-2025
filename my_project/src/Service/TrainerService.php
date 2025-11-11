@@ -3,55 +3,55 @@
 namespace App\Service;
 
 use App\Entity\Trainers;
+use App\Service\RequestCheckerService;
 use Doctrine\ORM\EntityManagerInterface;
 
 class TrainerService
 {
     private EntityManagerInterface $em;
+    private RequestCheckerService $requestChecker;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, RequestCheckerService $requestChecker)
     {
         $this->em = $em;
+        $this->requestChecker = $requestChecker;
     }
 
-    public function getAll(): array
+    public function createTrainer(string $firstName, string $lastName, string $email, string $specialty, string $phone): Trainers
     {
-        return $this->em->getRepository(Trainers::class)->findAll();
-    }
-
-    public function create(array $data): Trainers
-    {
-        $trainer = new Trainers();
-        $trainer->setFirstName($data['first_name']);
-        $trainer->setLastName($data['last_name']);
-        $trainer->setEmail($data['email']);
-
-        $this->em->persist($trainer);
+        $t = $this->createTrainerObject($firstName, $lastName, $email, $specialty, $phone);
+        $this->requestChecker->validateRequestDataByConstraints($t);
+        $this->em->persist($t);
         $this->em->flush();
-
-        return $trainer;
+        return $t;
     }
 
-    public function update(int $id, array $data): ?Trainers
+    private function createTrainerObject(string $firstName, string $lastName, string $email, string $specialty, string $phone): Trainers
     {
-        $trainer = $this->em->getRepository(Trainers::class)->find($id);
-        if (!$trainer) return null;
+        $t = new Trainers();
+        $t->setFirstName($firstName)
+            ->setLastName($lastName)
+            ->setEmail($email)
+            ->setSpecialty($specialty)
+            ->setPhone($phone);
+        return $t;
+    }
 
-        if (isset($data['first_name'])) $trainer->setFirstName($data['first_name']);
-        if (isset($data['last_name'])) $trainer->setLastName($data['last_name']);
-        if (isset($data['email'])) $trainer->setEmail($data['email']);
-
+    public function updateTrainer(Trainers $trainer, array $data): void
+    {
+        foreach ($data as $k => $v) {
+            $method = 'set' . str_replace('_', '', ucwords($k, '_'));
+            if (method_exists($trainer, $method)) {
+                $trainer->$method($v);
+            }
+        }
+        $this->requestChecker->validateRequestDataByConstraints($trainer);
         $this->em->flush();
-        return $trainer;
     }
 
-    public function delete(int $id): bool
+    public function deleteTrainer(Trainers $trainer): void
     {
-        $trainer = $this->em->getRepository(Trainers::class)->find($id);
-        if (!$trainer) return false;
-
         $this->em->remove($trainer);
         $this->em->flush();
-        return true;
     }
 }

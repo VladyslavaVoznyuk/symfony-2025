@@ -3,59 +3,54 @@
 namespace App\Service;
 
 use App\Entity\Client;
+use App\Service\RequestCheckerService;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ClientService
 {
     private EntityManagerInterface $em;
+    private RequestCheckerService $requestChecker;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, RequestCheckerService $requestChecker)
     {
         $this->em = $em;
+        $this->requestChecker = $requestChecker;
     }
 
-    public function getAll(): array
+    public function createClient(string $firstName, string $lastName, string $email, \DateTimeInterface $birthDate): Client
     {
-        return $this->em->getRepository(Client::class)->findAll();
-    }
-
-    public function create(array $data): Client
-    {
-        $client = new Client();
-        $client->setFirstName($data['first_name']);
-        $client->setLastName($data['last_name']);
-        $client->setEmail($data['email']);
-        $client->setBirthDate(new \DateTime($data['birth_date']));
-        $client->setPhone($data['phone']);
-
+        $client = $this->createClientObject($firstName, $lastName, $email, $birthDate);
+        $this->requestChecker->validateRequestDataByConstraints($client);
         $this->em->persist($client);
         $this->em->flush();
-
         return $client;
     }
 
-    public function update(int $id, array $data): ?Client
+    private function createClientObject(string $firstName, string $lastName, string $email, \DateTimeInterface $birthDate): Client
     {
-        $client = $this->em->getRepository(Client::class)->find($id);
-        if (!$client) return null;
+        $c = new Client();
+        $c->setFirstName($firstName)
+            ->setLastName($lastName)
+            ->setEmail($email)
+            ->setBirthDate($birthDate);
+        return $c;
+    }
 
-        if (isset($data['first_name'])) $client->setFirstName($data['first_name']);
-        if (isset($data['last_name'])) $client->setLastName($data['last_name']);
-        if (isset($data['email'])) $client->setEmail($data['email']);
-        if (isset($data['birth_date'])) $client->setBirthDate(new \DateTime($data['birth_date']));
-        if (isset($data['phone'])) $client->setPhone($data['phone']);
-
+    public function updateClient(Client $client, array $data): void
+    {
+        foreach ($data as $k => $v) {
+            $method = 'set' . str_replace('_', '', ucwords($k, '_'));
+            if (method_exists($client, $method)) {
+                $client->$method($v);
+            }
+        }
+        $this->requestChecker->validateRequestDataByConstraints($client);
         $this->em->flush();
-        return $client;
     }
 
-    public function delete(int $id): bool
+    public function deleteClient(Client $client): void
     {
-        $client = $this->em->getRepository(Client::class)->find($id);
-        if (!$client) return false;
-
         $this->em->remove($client);
         $this->em->flush();
-        return true;
     }
 }

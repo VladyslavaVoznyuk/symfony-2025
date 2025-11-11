@@ -3,55 +3,53 @@
 namespace App\Service;
 
 use App\Entity\Programs;
+use App\Service\RequestCheckerService;
 use Doctrine\ORM\EntityManagerInterface;
 
 class ProgramService
 {
     private EntityManagerInterface $em;
+    private RequestCheckerService $requestChecker;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, RequestCheckerService $requestChecker)
     {
         $this->em = $em;
+        $this->requestChecker = $requestChecker;
     }
 
-    public function getAll(): array
+    public function createProgram(string $name, string $description, int $durationWeeks): Programs
     {
-        return $this->em->getRepository(Programs::class)->findAll();
-    }
-
-    public function create(array $data): Programs
-    {
-        $program = new Programs();
-        $program->setName($data['name']);
-        $program->setDescription($data['description']);
-        $program->setDurationWeeks($data['duration_weeks']);
-
-        $this->em->persist($program);
+        $p = $this->createProgramObject($name, $description, $durationWeeks);
+        $this->requestChecker->validateRequestDataByConstraints($p);
+        $this->em->persist($p);
         $this->em->flush();
-
-        return $program;
+        return $p;
     }
 
-    public function update(int $id, array $data): ?Programs
+    private function createProgramObject(string $name, string $description, int $durationWeeks): Programs
     {
-        $program = $this->em->getRepository(Programs::class)->find($id);
-        if (!$program) return null;
+        $p = new Programs();
+        $p->setName($name)
+            ->setDescription($description)
+            ->setDurationWeeks((string)$durationWeeks);
+        return $p;
+    }
 
-        if (isset($data['name'])) $program->setName($data['name']);
-        if (isset($data['description'])) $program->setDescription($data['description']);
-        if (isset($data['duration_weeks'])) $program->setDurationWeeks($data['duration_weeks']);
-
+    public function updateProgram(Programs $program, array $data): void
+    {
+        foreach ($data as $k => $v) {
+            $method = 'set' . str_replace('_', '', ucwords($k, '_'));
+            if (method_exists($program, $method)) {
+                $program->$method($v);
+            }
+        }
+        $this->requestChecker->validateRequestDataByConstraints($program);
         $this->em->flush();
-        return $program;
     }
 
-    public function delete(int $id): bool
+    public function deleteProgram(Programs $program): void
     {
-        $program = $this->em->getRepository(Programs::class)->find($id);
-        if (!$program) return false;
-
         $this->em->remove($program);
         $this->em->flush();
-        return true;
     }
 }
