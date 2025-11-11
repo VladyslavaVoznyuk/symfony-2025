@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ClientProgramsRepository; // Додано
 use App\Services\ClientPrograms\ClientProgramsService;
 use App\Services\RequestCheckerService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,18 +16,23 @@ use Exception;
 #[Route('/client/programs')]
 final class ClientProgramsController extends AbstractController
 {
+    private const ITEMS_PER_PAGE = 15;
+
     private EntityManagerInterface $entityManager;
     private ClientProgramsService $clientProgramsService;
     private RequestCheckerService $requestCheckerService;
+    private ClientProgramsRepository $clientProgramsRepository;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         ClientProgramsService $clientProgramsService,
-        RequestCheckerService $requestCheckerService
+        RequestCheckerService $requestCheckerService,
+        ClientProgramsRepository $clientProgramsRepository
     ) {
         $this->entityManager = $entityManager;
         $this->clientProgramsService = $clientProgramsService;
         $this->requestCheckerService = $requestCheckerService;
+        $this->clientProgramsRepository = $clientProgramsRepository;
     }
 
     /**
@@ -51,9 +57,23 @@ final class ClientProgramsController extends AbstractController
     }
 
     #[Route('', name: 'app_client_programs_index', methods: ['GET'])]
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        return new JsonResponse($this->clientProgramsService->getAll());
+        $requestData = $request->query->all();
+
+        $itemsPerPage = (int)($requestData['itemsPerPage'] ?? self::ITEMS_PER_PAGE);
+        $page = (int)($requestData['page'] ?? 1);
+
+        unset($requestData['itemsPerPage'], $requestData['page']);
+        $filters = $requestData;
+
+        $clientProgramsData = $this->clientProgramsRepository->getAllClientProgramsByFilter(
+            $filters,
+            $itemsPerPage,
+            $page
+        );
+
+        return new JsonResponse($clientProgramsData, Response::HTTP_OK);
     }
 
     #[Route('/{id}', name: 'app_client_programs_update', methods: ['PUT'])]
@@ -63,7 +83,7 @@ final class ClientProgramsController extends AbstractController
         $program = $this->clientProgramsService->updateClientProgram($id, $data);
         $this->entityManager->flush();
 
-        return new JsonResponse($program);
+        return new JsonResponse($program, Response::HTTP_OK);
     }
 
     #[Route('/{id}', name: 'app_client_programs_delete', methods: ['DELETE'])]

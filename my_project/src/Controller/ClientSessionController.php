@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\ClientSessionRepository; // Додано
 use App\Services\ClientSession\ClientSessionService;
 use App\Services\RequestCheckerService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,18 +16,23 @@ use Exception;
 #[Route('/client/session')]
 final class ClientSessionController extends AbstractController
 {
+    private const ITEMS_PER_PAGE = 20;
+
     private EntityManagerInterface $entityManager;
     private ClientSessionService $clientSessionService;
     private RequestCheckerService $requestCheckerService;
+    private ClientSessionRepository $clientSessionRepository;
 
     public function __construct(
         EntityManagerInterface $entityManager,
         ClientSessionService $clientSessionService,
-        RequestCheckerService $requestCheckerService
+        RequestCheckerService $requestCheckerService,
+        ClientSessionRepository $clientSessionRepository
     ) {
         $this->entityManager = $entityManager;
         $this->clientSessionService = $clientSessionService;
         $this->requestCheckerService = $requestCheckerService;
+        $this->clientSessionRepository = $clientSessionRepository;
     }
 
     /**
@@ -50,9 +56,23 @@ final class ClientSessionController extends AbstractController
     }
 
     #[Route('', name: 'app_client_session_index', methods: ['GET'])]
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        return new JsonResponse($this->clientSessionService->getAll());
+        $requestData = $request->query->all();
+
+        $itemsPerPage = (int)($requestData['itemsPerPage'] ?? self::ITEMS_PER_PAGE);
+        $page = (int)($requestData['page'] ?? 1);
+
+        unset($requestData['itemsPerPage'], $requestData['page']);
+        $filters = $requestData;
+
+        $clientSessionsData = $this->clientSessionRepository->getAllClientSessionsByFilter(
+            $filters,
+            $itemsPerPage,
+            $page
+        );
+
+        return new JsonResponse($clientSessionsData, Response::HTTP_OK);
     }
 
     #[Route('/{id}', name: 'app_client_session_update', methods: ['PUT'])]
@@ -62,7 +82,7 @@ final class ClientSessionController extends AbstractController
         $session = $this->clientSessionService->updateClientSession($id, $data);
         $this->entityManager->flush();
 
-        return new JsonResponse($session);
+        return new JsonResponse($session, Response::HTTP_OK);
     }
 
     #[Route('/{id}', name: 'app_client_session_delete', methods: ['DELETE'])]

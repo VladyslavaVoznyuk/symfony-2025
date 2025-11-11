@@ -30,11 +30,28 @@ class Attendance
     #[Assert\Choice(choices: ['yes', 'no'], message: 'Value must be "yes" or "no".')]
     private ?string $attended = null;
 
-    public function getId(): ?int { return $this->id; }
-    public function getClient(): ?Client { return $this->client; }
-    public function setClient(?Client $client): static { $this->client = $client; return $this; }
-    public function getSession(): ?Session { return $this->session; }
-    public function setSession(?Session $session): static { $this->session = $session; return $this; }
-    public function getAttended(): ?string { return $this->attended; }
-    public function setAttended(string $attended): static { $this->attended = $attended; return $this; }
+    public function getId(): ?int {
+        return $this->id;
+    }
+    public function getClient(): ?Client {
+        return $this->client;
+    }
+    public function setClient(?Client $client): static {
+        $this->client = $client;
+        return $this;
+    }
+    public function getSession(): ?Session {
+        return $this->session;
+    }
+    public function setSession(?Session $session): static {
+        $this->session = $session;
+        return $this;
+    }
+    public function getAttended(): ?string {
+        return $this->attended;
+    }
+    public function setAttended(string $attended): static {
+        $this->attended = $attended;
+        return $this;
+    }
 }

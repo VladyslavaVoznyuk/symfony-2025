@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\PaymentsRepository; // Додано
 use App\Service\RequestCheckerService;
 use App\Service\PaymentService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,19 +16,45 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/api/payments')]
 final class PaymentsController extends AbstractController
 {
+    private const ITEMS_PER_PAGE = 20;
     private const REQUIRED_FIELDS_FOR_CREATE_PAYMENT = ['client_name', 'amount', 'method', 'date'];
     private const REQUIRED_FIELDS_FOR_UPDATE_PAYMENT = ['client_name', 'amount', 'method', 'date'];
 
+    private readonly PaymentService $paymentService;
+    private readonly RequestCheckerService $requestCheckerService;
+    private readonly EntityManagerInterface $entityManager;
+    private readonly PaymentsRepository $paymentsRepository;
+
     public function __construct(
-        private readonly PaymentService $paymentService,
-        private readonly RequestCheckerService $requestCheckerService,
-        private readonly EntityManagerInterface $entityManager
-    ) {}
+        PaymentService $paymentService,
+        RequestCheckerService $requestCheckerService,
+        EntityManagerInterface $entityManager,
+        PaymentsRepository $paymentsRepository
+    ) {
+        $this->paymentService = $paymentService;
+        $this->requestCheckerService = $requestCheckerService;
+        $this->entityManager = $entityManager;
+        $this->paymentsRepository = $paymentsRepository;
+    }
 
     #[Route('', name: 'app_payments_index', methods: ['GET'])]
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        return new JsonResponse($this->paymentService->getAllPayments(), Response::HTTP_OK);
+        $requestData = $request->query->all();
+
+        $itemsPerPage = (int)($requestData['itemsPerPage'] ?? self::ITEMS_PER_PAGE);
+        $page = (int)($requestData['page'] ?? 1);
+
+        unset($requestData['itemsPerPage'], $requestData['page']);
+        $filters = $requestData;
+
+        $paymentsData = $this->paymentsRepository->getAllPaymentsByFilter(
+            $filters,
+            $itemsPerPage,
+            $page
+        );
+
+        return new JsonResponse($paymentsData, Response::HTTP_OK);
     }
 
     /**

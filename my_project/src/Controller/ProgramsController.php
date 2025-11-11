@@ -16,21 +16,48 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/programs')]
 final class ProgramsController extends AbstractController
 {
+    private const ITEMS_PER_PAGE = 15;
+
     private ProgramService $programsService;
     private ValidatorService $validatorService;
+    private ProgramsRepository $programsRepository;
 
-    public function __construct(ProgramService $programsService, ValidatorService $validatorService)
-    {
+    public function __construct(
+        ProgramService $programsService,
+        ValidatorService $validatorService,
+        ProgramsRepository $programsRepository
+    ) {
         $this->programsService = $programsService;
         $this->validatorService = $validatorService;
+        $this->programsRepository = $programsRepository;
     }
 
     #[Route(name: 'app_programs_index', methods: ['GET'])]
-    public function index(ProgramsRepository $programsRepository): Response
+    public function index(Request $request): Response
     {
-        $programs = $this->programsService->getAllPrograms();
+        $requestData = $request->query->all();
+
+        $itemsPerPage = (int)($requestData['itemsPerPage'] ?? self::ITEMS_PER_PAGE);
+        $page = (int)($requestData['page'] ?? 1);
+
+        unset($requestData['itemsPerPage'], $requestData['page']);
+        $filters = $requestData;
+
+        $programsData = $this->programsRepository->getAllProgramsByFilter(
+            $filters,
+            $itemsPerPage,
+            $page
+        );
+
         return $this->render('programs/index.html.twig', [
-            'programs' => $programs,
+            'programs' => $programsData['programs'],
+            'pagination' => [
+                'currentPage' => $page,
+                'itemsPerPage' => $itemsPerPage,
+                'totalItems' => $programsData['totalItems'],
+                'totalPageCount' => $programsData['totalPageCount'],
+            ],
+            'currentFilters' => $filters,
         ]);
     }
 

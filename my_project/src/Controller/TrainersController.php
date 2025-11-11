@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Trainers;
+use App\Repository\TrainersRepository; // Додано
 use App\Service\RequestCheckerService;
 use App\Service\TrainerService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,21 +17,45 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/api/trainers')]
 final class TrainersController extends AbstractController
 {
+    private const ITEMS_PER_PAGE = 15;
     private const REQUIRED_FIELDS_FOR_CREATE_TRAINER = ['name', 'specialization', 'experience', 'phone'];
     private const REQUIRED_FIELDS_FOR_UPDATE_TRAINER = ['name', 'specialization', 'experience', 'phone'];
 
-    public function __construct(
-        private readonly TrainerService $trainerService,
-        private readonly RequestCheckerService $requestCheckerService,
-        private readonly EntityManagerInterface $entityManager
-    ) {}
+    private readonly TrainerService $trainerService;
+    private readonly RequestCheckerService $requestCheckerService;
+    private readonly EntityManagerInterface $entityManager;
+    private readonly TrainersRepository $trainersRepository;
 
+    public function __construct(
+        TrainerService $trainerService,
+        RequestCheckerService $requestCheckerService,
+        EntityManagerInterface $entityManager,
+        TrainersRepository $trainersRepository
+    ) {
+        $this->trainerService = $trainerService;
+        $this->requestCheckerService = $requestCheckerService;
+        $this->entityManager = $entityManager;
+        $this->trainersRepository = $trainersRepository;
+    }
 
     #[Route('', name: 'app_trainers_index', methods: ['GET'])]
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $trainers = $this->trainerService->getAllTrainers();
-        return new JsonResponse($trainers, Response::HTTP_OK);
+        $requestData = $request->query->all();
+
+        $itemsPerPage = (int)($requestData['itemsPerPage'] ?? self::ITEMS_PER_PAGE);
+        $page = (int)($requestData['page'] ?? 1);
+
+        unset($requestData['itemsPerPage'], $requestData['page']);
+        $filters = $requestData;
+
+        $trainersData = $this->trainersRepository->getAllTrainersByFilter(
+            $filters,
+            $itemsPerPage,
+            $page
+        );
+
+        return new JsonResponse($trainersData, Response::HTTP_OK);
     }
 
 

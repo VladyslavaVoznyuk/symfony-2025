@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Attendance;
+use App\Repository\AttendanceRepository; // Додано
 use App\Services\Attendance\AttendanceService;
 use App\Services\RequestCheckerService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -16,18 +17,23 @@ use Exception;
 #[Route('/attendance')]
 final class AttendanceController extends AbstractController
 {
+    private const ITEMS_PER_PAGE = 10;
+
     private EntityManagerInterface $entityManager;
     private AttendanceService $attendanceService;
     private RequestCheckerService $requestCheckerService;
+    private AttendanceRepository $attendanceRepository; // Додано
 
     public function __construct(
         EntityManagerInterface $entityManager,
         AttendanceService $attendanceService,
-        RequestCheckerService $requestCheckerService
+        RequestCheckerService $requestCheckerService,
+        AttendanceRepository $attendanceRepository // Ін'єкція репозиторію
     ) {
         $this->entityManager = $entityManager;
         $this->attendanceService = $attendanceService;
         $this->requestCheckerService = $requestCheckerService;
+        $this->attendanceRepository = $attendanceRepository;
     }
 
     /**
@@ -50,11 +56,24 @@ final class AttendanceController extends AbstractController
         return new JsonResponse($attendance, Response::HTTP_CREATED);
     }
 
-    #[Route('', name: 'app_attendance_index', methods: ['GET'])]
-    public function index(): JsonResponse
+    #[Route('', name: 'app_attendance_get_collection', methods: ['GET'])]
+    public function getCollection(Request $request): JsonResponse
     {
-        $attendances = $this->attendanceService->getAll();
-        return new JsonResponse($attendances);
+        $requestData = $request->query->all();
+
+        $itemsPerPage = (int)($requestData['itemsPerPage'] ?? self::ITEMS_PER_PAGE);
+        $page = (int)($requestData['page'] ?? 1);
+
+        unset($requestData['itemsPerPage'], $requestData['page']);
+        $filters = $requestData;
+
+        $data = $this->attendanceRepository->getAllAttendanceByFilter(
+            $filters,
+            $itemsPerPage,
+            $page
+        );
+
+        return new JsonResponse($data, Response::HTTP_OK);
     }
 
     #[Route('/{id}', name: 'app_attendance_update', methods: ['PUT'])]
@@ -64,7 +83,7 @@ final class AttendanceController extends AbstractController
         $attendance = $this->attendanceService->updateAttendance($id, $data);
         $this->entityManager->flush();
 
-        return new JsonResponse($attendance);
+        return new JsonResponse($attendance, Response::HTTP_OK);
     }
 
     #[Route('/{id}', name: 'app_attendance_delete', methods: ['DELETE'])]
