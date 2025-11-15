@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="a74126ea-3d8f-470e-a2a0-07451a6958ae" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/my_project/.env" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/.env.dev" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/bin/console" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/compose.override.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/compose.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/composer.json" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/composer.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/config/bundles.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/config/packages/cache.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/config/packages/doctrine.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/config/packages/doctrine_migrations.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/config/packages/framework.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/config/packages/routing.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/config/packages/twig.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/config/packages/validator.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/config/preload.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/config/routes.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/config/routes/framework.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/config/services.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/migrations/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/public/index.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Controller/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Controller/AttendanceController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Controller/ClientController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Controller/ClientProgramsController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Controller/ClientSessionController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Controller/EqipmentController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Controller/PaymentsController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Controller/ProgramsController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Controller/SessionController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Controller/TrainersController.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Entity/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Entity/Attendance.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Entity/Client.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Entity/ClientPrograms.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Entity/ClientSession.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Entity/Eqipment.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Entity/Payments.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Entity/Programs.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Entity/Session.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Entity/TrainerPrograms.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Entity/Trainers.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/EventListener/RuntimeConstraintExceptionListener.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Form/AttendanceType.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Form/ClientProgramsType.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Form/ClientSessionType.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Form/EqipmentType.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Form/PaymentsType.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Form/ProgramsType.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Form/SessionType.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Form/TrainersType.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Kernel.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Repository/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Repository/AttendanceRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Repository/ClientProgramsRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Repository/ClientRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Repository/ClientSessionRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Repository/EqipmentRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Repository/PaymentsRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Repository/ProgramsRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Repository/SessionRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Repository/TrainerProgramsRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Repository/TrainersRepository.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Service/AttendanceService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Service/ClientProgramsService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Service/ClientService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Service/ClientSessionService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Service/EqipmentService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Service/PaymentService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Service/ProgramService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Service/RequestCheckerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Service/SessionService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Service/TrainerProgramsService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Service/TrainerService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Service/Validator/AttendanceValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Service/Validator/ClientProgramValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Service/Validator/ClientValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Service/Validator/EqipmentValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Service/Validator/PaymentValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Service/Validator/ProgramValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Service/Validator/SessionValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Service/Validator/TrainerProgramValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Service/Validator/TrainerValidator.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/src/Service/ValidatorService.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/symfony.lock" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/attendance/_delete_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/attendance/_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/attendance/edit.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/attendance/index.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/attendance/new.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/attendance/show.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/base.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/client_programs/_delete_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/client_programs/_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/client_programs/edit.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/client_programs/index.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/client_programs/new.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/client_programs/show.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/client_session/_delete_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/client_session/_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/client_session/edit.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/client_session/index.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/client_session/new.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/client_session/show.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/eqipment/_delete_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/eqipment/_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/eqipment/edit.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/eqipment/index.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/eqipment/new.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/eqipment/show.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/payments/_delete_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/payments/_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/payments/edit.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/payments/index.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/payments/new.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/payments/show.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/product/index.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/programs/_delete_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/programs/_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/programs/edit.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/programs/index.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/programs/new.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/programs/show.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/session/_delete_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/session/_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/session/edit.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/session/index.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/session/new.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/session/show.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/trainers/_delete_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/trainers/_form.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/trainers/edit.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/trainers/index.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/trainers/new.html.twig" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/my_project/templates/trainers/show.html.twig" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/my_project/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="lab_4" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHPv 8.2">
+    <include_path>
+      <path value="$PROJECT_DIR$/my_project/vendor/doctrine/inflector" />
+      <path value="$PROJECT_DIR$/my_project/vendor/composer" />
+      <path value="$PROJECT_DIR$/my_project/vendor/nikic/php-parser" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/process" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/maker-bundle" />
+      <path value="$PROJECT_DIR$/my_project/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/my_project/vendor/psr/container" />
+      <path value="$PROJECT_DIR$/my_project/vendor/psr/event-dispatcher" />
+      <path value="$PROJECT_DIR$/my_project/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/cache" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/twig-bundle" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/cache-contracts" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/config" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/twig-bridge" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/console" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/translation-contracts" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/dependency-injection" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/deprecation-contracts" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/dotenv" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/error-handler" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/event-dispatcher" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/event-dispatcher-contracts" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/filesystem" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/finder" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/flex" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/framework-bundle" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/http-foundation" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/http-kernel" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/polyfill-intl-grapheme" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/polyfill-intl-normalizer" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/polyfill-mbstring" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/polyfill-php83" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/routing" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/runtime" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/service-contracts" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/string" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/var-dumper" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/var-exporter" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/my_project/vendor/twig/twig" />
+      <path value="$PROJECT_DIR$/my_project/vendor/doctrine/instantiator" />
+      <path value="$PROJECT_DIR$/my_project/vendor/doctrine/persistence" />
+      <path value="$PROJECT_DIR$/my_project/vendor/doctrine/doctrine-migrations-bundle" />
+      <path value="$PROJECT_DIR$/my_project/vendor/doctrine/event-manager" />
+      <path value="$PROJECT_DIR$/my_project/vendor/doctrine/dbal" />
+      <path value="$PROJECT_DIR$/my_project/vendor/doctrine/orm" />
+      <path value="$PROJECT_DIR$/my_project/vendor/doctrine/deprecations" />
+      <path value="$PROJECT_DIR$/my_project/vendor/doctrine/lexer" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/polyfill-php84" />
+      <path value="$PROJECT_DIR$/my_project/vendor/doctrine/sql-formatter" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/doctrine-bridge" />
+      <path value="$PROJECT_DIR$/my_project/vendor/doctrine/doctrine-bundle" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/stopwatch" />
+      <path value="$PROJECT_DIR$/my_project/vendor/doctrine/collections" />
+      <path value="$PROJECT_DIR$/my_project/vendor/doctrine/migrations" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/validator" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/property-access" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/property-info" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/polyfill-intl-icu" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/options-resolver" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/password-hasher" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/security-csrf" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/security-core" />
+      <path value="$PROJECT_DIR$/my_project/vendor/symfony/form" />
+    </include_path>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="32Gq19xJ4FENOMSc2fybdM9c6Hl" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "lab__3",
+    "last_opened_file_path": "C:/wamp64/www/symfony-2025",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-php-predefined-ba97393d7c68-6f8e3395a2b4-com.jetbrains.php.sharedIndexes-PS-233.14015.96" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a74126ea-3d8f-470e-a2a0-07451a6958ae" name="Changes" comment="" />
+      <created>1757057038796</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1757057038796</updated>
+      <workItem from="1757057039876" duration="595000" />
+      <workItem from="1758119798754" duration="1146000" />
+      <workItem from="1758121091483" duration="621000" />
+      <workItem from="1758282656103" duration="5308000" />
+      <workItem from="1758369884568" duration="2687000" />
+      <workItem from="1760702395652" duration="14413000" />
+      <workItem from="1760789265703" duration="9131000" />
+      <workItem from="1760888420671" duration="5079000" />
+      <workItem from="1761851870008" duration="7242000" />
+      <workItem from="1762789348408" duration="16793000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
