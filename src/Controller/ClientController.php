@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\ClientRepository; // Додано
+use App\Repository\ClientRepository;
 use App\Service\ClientService;
 use App\Service\RequestCheckerService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,32 +11,34 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\Attribute\IsGranted; // 💡 Необхідний імпорт
 use Exception;
 
 #[Route('/api/clients')]
 class ClientController extends AbstractController
 {
     private const ITEMS_PER_PAGE = 20;
-    public const REQUIRED_FIELDS_FOR_CREATE = ['firstName', 'lastName', 'email', 'phone'];
+    public const REQUIRED_FIELDS_FOR_CREATE = ['firstName', 'lastName', 'email', 'phone', 'password'];
 
     private ClientService $clientService;
     private RequestCheckerService $requestCheckerService;
     private EntityManagerInterface $entityManager;
-    private ClientRepository $clientRepository; // Додано
+    private ClientRepository $clientRepository;
 
     public function __construct(
         ClientService $clientService,
         RequestCheckerService $requestCheckerService,
         EntityManagerInterface $entityManager,
-        ClientRepository $clientRepository // Ін'єкція репозиторію
+        ClientRepository $clientRepository
     ) {
         $this->clientService = $clientService;
         $this->requestCheckerService = $requestCheckerService;
         $this->entityManager = $entityManager;
-        $this->clientRepository = $clientRepository; // Присвоєння
+        $this->clientRepository = $clientRepository;
     }
 
     #[Route('', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function create(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -46,7 +48,8 @@ class ClientController extends AbstractController
             $data['firstName'],
             $data['lastName'],
             $data['email'],
-            $data['phone']
+            $data['phone'],
+            $data['password']
         );
 
         $this->entityManager->flush();
@@ -54,6 +57,7 @@ class ClientController extends AbstractController
     }
 
     #[Route('', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function index(Request $request): JsonResponse
     {
         $requestData = $request->query->all();
@@ -70,11 +74,11 @@ class ClientController extends AbstractController
             $page
         );
 
-
         return new JsonResponse($clientsData, Response::HTTP_OK);
     }
 
     #[Route('/{id}', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
     public function show(int $id): JsonResponse
     {
         $client = $this->clientService->getClientById($id);
@@ -85,6 +89,7 @@ class ClientController extends AbstractController
     }
 
     #[Route('/{id}', methods: ['PUT'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function update(Request $request, int $id): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -97,6 +102,7 @@ class ClientController extends AbstractController
     }
 
     #[Route('/{id}', methods: ['DELETE'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(int $id): JsonResponse
     {
         $deleted = $this->clientService->deleteClient($id);
