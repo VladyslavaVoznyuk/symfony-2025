@@ -2,17 +2,17 @@
 
 namespace App\Controller;
 
-use App\Entity\Trainers;
-use App\Repository\TrainersRepository; // Додано
-use App\Service\RequestCheckerService;
-use App\Service\TrainerService;
+use App\Repository\TrainersRepository;
+use App\Services\RequestCheckerService;
+use App\Services\Trainer\TrainerService;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+
+// Додано
 
 #[Route('/api/trainers')]
 final class TrainersController extends AbstractController

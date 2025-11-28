@@ -1,0 +1,5 @@
+
+api_platform_routes:
+  resource: .
+  type: api_platform
+  prefix: /api

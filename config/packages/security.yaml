@@ -1,0 +1,32 @@
+
+security:
+    enable_authenticator_manager: true
+
+    password_hashers:
+        App\Entity\Client:
+            algorithm: auto
+
+    providers:
+        app_client_provider:
+            entity:
+                class: App\Entity\Client
+                property: email
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+
+        api:
+            pattern: ^/api
+            stateless: true
+            #custom_authenticators:
+                #- lexik_jwt_authentication.jwt_token_authenticator
+
+    access_control:
+        #- { path: ^/api/login_check, roles: PUBLIC_ACCESS }
+        #- { path: ^/api/login, roles: PUBLIC_ACCESS }
+
+        #- { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+        - { path: ^/api, roles: PUBLIC_ACCESS }

@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Repository\EqipmentRepository; // Додано
-use App\Service\RequestCheckerService;
-use App\Service\EqipmentService;
+use App\Repository\EqipmentRepository;
+use App\Services\Eqipment\EqipmentService;
+use App\Services\RequestCheckerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+
+// Додано
 
 #[Route('/api/eqipments')]
 final class EqipmentController extends AbstractController

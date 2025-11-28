@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\ClientProgramsRepository; // Додано
+use App\Repository\ClientProgramsRepository;
 use App\Services\ClientPrograms\ClientProgramsService;
 use App\Services\RequestCheckerService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -11,9 +11,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted; // 💡 Необхідний імпорт
 use Exception;
-
-#[Route('/client/programs')]
+#[Route('/api/client/programs')]
 final class ClientProgramsController extends AbstractController
 {
     private const ITEMS_PER_PAGE = 15;
@@ -39,6 +39,7 @@ final class ClientProgramsController extends AbstractController
      * @throws Exception
      */
     #[Route('', name: 'app_client_programs_create', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function create(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -57,6 +58,7 @@ final class ClientProgramsController extends AbstractController
     }
 
     #[Route('', name: 'app_client_programs_index', methods: ['GET'])]
+    #[IsGranted('ROLE_USER')]
     public function index(Request $request): JsonResponse
     {
         $requestData = $request->query->all();
@@ -77,6 +79,7 @@ final class ClientProgramsController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_client_programs_update', methods: ['PUT'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function update(int $id, Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
@@ -87,6 +90,7 @@ final class ClientProgramsController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_client_programs_delete', methods: ['DELETE'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(int $id): JsonResponse
     {
         $this->clientProgramsService->deleteClientProgram($id);

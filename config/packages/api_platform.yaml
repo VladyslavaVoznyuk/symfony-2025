@@ -1,0 +1,22 @@
+
+api_platform:
+  title: Hello API Platform
+  version: 1.0.0
+  description: Лабораторна робота №6. CRUD операції з Entity Client.
+
+  enable_docs: true
+  enable_swagger_ui: true
+
+  swagger:
+    versions: [3]
+
+  formats:
+    jsonld: ['application/ld+json']
+    json: ['application/json']
+    html: ['text/html']
+
+  defaults:
+    stateless: true
+
+    cache_headers:
+      vary: ['Content-Type', 'Authorization', 'Origin']
