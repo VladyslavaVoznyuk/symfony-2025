@@ -3,16 +3,17 @@
 namespace App\Controller;
 
 use App\Repository\ClientRepository;
-use App\Service\ClientService;
-use App\Service\RequestCheckerService;
+use App\Services\Client\ClientService;
+use App\Services\RequestCheckerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Security\Http\Attribute\IsGranted; // 💡 Необхідний імпорт
-use Exception;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+
+// 💡 Необхідний імпорт
 
 #[Route('/api/clients')]
 class ClientController extends AbstractController

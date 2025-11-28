@@ -2,9 +2,9 @@
 
 namespace App\Controller;
 
-use App\Repository\PaymentsRepository; // Додано
-use App\Service\RequestCheckerService;
-use App\Service\PaymentService;
+use App\Repository\PaymentsRepository;
+use App\Services\Payment\PaymentService;
+use App\Services\RequestCheckerService;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+
+// Додано
 
 #[Route('/api/payments')]
 final class PaymentsController extends AbstractController
