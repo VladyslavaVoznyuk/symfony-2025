@@ -11,10 +11,12 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Put;
 use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Patch;
 use Doctrine\DBAL\Types\Types;
 use App\Repository\ClientProgramsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Action\ClientPrograms\MarkProgramCompletedAction;
 
 #[ORM\Entity(repositoryClass: ClientProgramsRepository::class)]
 #[ApiResource(
@@ -35,6 +37,14 @@ use Symfony\Component\Validator\Constraints as Assert;
 
         new Delete(
             security: "is_granted('ROLE_ADMIN')"
+        ),
+
+        new Patch(
+            uriTemplate: '/client_programs/{id}/complete',
+            controller: MarkProgramCompletedAction::class,
+            security: "is_granted('ROLE_ADMIN')",
+            name: 'mark_program_completed',
+            read: false,
         )
     ]
 )]

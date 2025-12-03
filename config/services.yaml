@@ -27,8 +27,26 @@ services:
     App\EventListener\RuntimeConstraintExceptionListener:
         tags:
             - { name: kernel.event_listener, event: kernel.exception }
+App\EventListener\TrainerUpdateListener:
+    tags:
+        - { name: doctrine.event_listener, event: postUpdate }
 
+    App\EventListener\PaymentUpdateListener:
+        tags:
+            - { name: doctrine.event_listener, event: postUpdate }
     App\Service\RequestCheckerService: ~
+
+    App\Extension\FilterClientSessionsByCurrentTrainerExtension:
+        tags:
+            - { name: api_platform.doctrine.orm.query_extension.collection }
+            - { name: api_platform.doctrine.orm.query_extension.item }
+
+    App\Extension\PaymentsOrderExtension:
+        arguments:
+            $requestStack: '@request_stack'
+        tags:
+            - { name: api_platform.doctrine.orm.query_extension.collection }
+
 
     App\Services\:
         resource: '../src/Services/'

@@ -5,18 +5,53 @@ namespace App\Entity;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\ApiFilter;
 use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
-use App\Repository\TrainersRepository;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Delete;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use App\Repository\TrainersRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use App\Action\Trainers\CalculateTrainerLoadAction;
 
 #[ORM\Entity(repositoryClass: TrainersRepository::class)]
-#[ApiResource]
+#[ApiResource(
+    security: "is_granted('ROLE_USER')",
+
+    operations: [
+        GetCollection::class,
+        Get::class,
+
+        new Post(
+            security: "is_granted('ROLE_ADMIN')"
+        ),
+
+        new Put(
+            security: "is_granted('ROLE_ADMIN')"
+        ),
+
+        new Delete(
+            security: "is_granted('ROLE_ADMIN')"
+        ),
+
+        new Get(
+            uriTemplate: '/trainers/{id}/load',
+            controller: CalculateTrainerLoadAction::class,
+            security: "is_granted('ROLE_USER')",
+            name: 'calculate_trainer_load',
+            read: false,
+
+        )
+    ]
+)]
 #[ApiFilter(SearchFilter::class, properties: [
+    'first_name' => 'partial',
     'last_name' => 'partial',
     'specialty' => 'partial',
-    'phone' => 'exact'
+    'email' => 'exact'
 ])]
 class Trainers
 {
@@ -47,7 +82,7 @@ class Trainers
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank]
-    #[Assert\Regex(pattern: '/^\+?[0-9]{10,15}$/', message: "Телефон має бути у форматі +380XXXXXXXXX")]
+    #[Assert\Regex(pattern: '/^\\+?\\d{10,15}$/', message: "Телефон має бути у форматі +380XXXXXXXXX")]
     private ?string $phone = null;
 
     #[ORM\OneToMany(targetEntity: TrainerPrograms::class, mappedBy: "trainer", cascade: ['persist', 'remove'])]
@@ -73,4 +108,14 @@ class Trainers
     public function setSpecialty(string $specialty): static { $this->specialty = $specialty; return $this; }
     public function getPhone(): ?string { return $this->phone; }
     public function setPhone(string $phone): static { $this->phone = $phone; return $this; }
+
+    public function getTrainerPrograms(): Collection
+    {
+        return $this->trainerPrograms;
+    }
+
+    public function getSessions(): Collection
+    {
+        return $this->sessions;
+    }
 }
