@@ -2,12 +2,25 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
 use App\Repository\PaymentsRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PaymentsRepository::class)]
+#[ApiResource(
+
+)]
+#[ApiFilter(SearchFilter::class, properties: [
+    'client.id' => 'exact',
+])]
+#[ApiFilter(DateFilter::class, properties: ['payment_date'])]
+#[ApiFilter(OrderFilter::class, properties: ['amount', 'payment_date'])]
 class Payments
 {
     #[ORM\Id]

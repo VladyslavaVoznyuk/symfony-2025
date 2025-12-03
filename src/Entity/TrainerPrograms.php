@@ -2,11 +2,19 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\TrainerProgramsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TrainerProgramsRepository::class)]
+#[ApiResource]
+#[ApiFilter(SearchFilter::class, properties: [
+    'trainer.id' => 'exact',
+    'program.id' => 'exact'
+])]
 class TrainerPrograms
 {
     #[ORM\Id]

@@ -2,11 +2,20 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\EqipmentRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EqipmentRepository::class)]
+#[ApiResource(
+)]
+#[ApiFilter(SearchFilter::class, properties: [
+    'name' => 'partial',
+    'description' => 'partial'
+])]
 class Eqipment
 {
     #[ORM\Id]
@@ -25,6 +34,7 @@ class Eqipment
     #[Assert\NotBlank]
     #[Assert\Length(min: 5, max: 255)]
     private ?string $description = null;
+
 
     public function getId(): ?int { return $this->id; }
     public function getName(): ?string { return $this->name; }
