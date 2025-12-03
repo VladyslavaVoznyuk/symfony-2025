@@ -2,11 +2,21 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\ClientSessionRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ClientSessionRepository::class)]
+#[ApiResource(
+
+)]
+#[ApiFilter(SearchFilter::class, properties: [
+    'client.id' => 'exact',
+    'session.id' => 'exact'
+])]
 class ClientSession
 {
     #[ORM\Id]

@@ -2,12 +2,47 @@
 
 namespace App\Entity;
 
-use App\Repository\ClientProgramsRepository;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use ApiPlatform\Metadata\Delete;
 use Doctrine\DBAL\Types\Types;
+use App\Repository\ClientProgramsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ClientProgramsRepository::class)]
+#[ApiResource(
+
+    security: "is_granted('ROLE_USER')",
+
+    operations: [
+        GetCollection::class,
+        Get::class,
+
+        new Post(
+            security: "is_granted('ROLE_ADMIN')"
+        ),
+
+        new Put(
+            security: "is_granted('ROLE_ADMIN')"
+        ),
+
+        new Delete(
+            security: "is_granted('ROLE_ADMIN')"
+        )
+    ]
+)]
+#[ApiFilter(SearchFilter::class, properties: [
+    'client.id' => 'exact',
+    'program.id' => 'exact'
+])]
+#[ApiFilter(DateFilter::class, properties: ['start_date', 'end_date'])]
 class ClientPrograms
 {
     #[ORM\Id]

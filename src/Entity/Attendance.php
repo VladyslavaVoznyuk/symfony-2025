@@ -2,11 +2,20 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
 use App\Repository\AttendanceRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: AttendanceRepository::class)]
+#[ApiResource]
+#[ApiFilter(SearchFilter::class, properties: [
+    'client.id' => 'exact',
+    'session.id' => 'exact',
+    'attended' => 'exact'
+])]
 class Attendance
 {
     #[ORM\Id]

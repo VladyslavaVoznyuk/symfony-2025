@@ -9,8 +9,8 @@
     <parameter key="kernel.runtime_mode.cli">%env(not:default:kernel.runtime_mode.web:)%</parameter>
     <parameter key="kernel.runtime_mode.worker">%env(bool:default::key:worker:default:kernel.runtime_mode:)%</parameter>
     <parameter key="kernel.debug">true</parameter>
-    <parameter key="kernel.build_dir">C:/wamp64/www/symfony-2025/var/cache/dev</parameter>
-    <parameter key="kernel.cache_dir">C:/wamp64/www/symfony-2025/var/cache/dev</parameter>
+    <parameter key="kernel.build_dir">C:\wamp64\www\symfony-2025\var\cache\dev</parameter>
+    <parameter key="kernel.cache_dir">C:\wamp64\www\symfony-2025\var\cache\dev</parameter>
     <parameter key="kernel.logs_dir">C:\wamp64\www\symfony-2025\var\log</parameter>
     <parameter key="kernel.bundles" type="collection">
       <parameter key="FrameworkBundle">Symfony\Bundle\FrameworkBundle\FrameworkBundle</parameter>
@@ -93,15 +93,15 @@
     <parameter key="asset.request_context.base_path">null</parameter>
     <parameter key="asset.request_context.secure">null</parameter>
     <parameter key="debug.error_handler.throw_at">-1</parameter>
-    <parameter key="debug.container.dump">C:/wamp64/www/symfony-2025/var/cache/dev/App_KernelDevDebugContainer.xml</parameter>
+    <parameter key="debug.container.dump">C:\wamp64\www\symfony-2025\var\cache\dev/App_KernelDevDebugContainer.xml</parameter>
     <parameter key="router.request_context.host">localhost</parameter>
     <parameter key="router.request_context.scheme">http</parameter>
     <parameter key="router.request_context.base_url"></parameter>
     <parameter key="router.resource">kernel::loadRoutes</parameter>
-    <parameter key="router.cache_dir">C:/wamp64/www/symfony-2025/var/cache/dev</parameter>
+    <parameter key="router.cache_dir">C:\wamp64\www\symfony-2025\var\cache\dev</parameter>
     <parameter key="request_listener.http_port">80</parameter>
     <parameter key="request_listener.https_port">443</parameter>
-    <parameter key="serializer.mapping.cache.file">C:/wamp64/www/symfony-2025/var/cache/dev/serialization.php</parameter>
+    <parameter key="serializer.mapping.cache.file">C:\wamp64\www\symfony-2025\var\cache\dev/serialization.php</parameter>
     <parameter key="cache.prefix.seed">_C:\wamp64\www\symfony-2025.App_KernelDevDebugContainer</parameter>
     <parameter key="session.metadata.storage_key">_sf2_meta</parameter>
     <parameter key="session.storage.options" type="collection">
@@ -115,7 +115,7 @@
     <parameter key="session.metadata.update_threshold">0</parameter>
     <parameter key="form.type_extension.csrf.enabled">true</parameter>
     <parameter key="form.type_extension.csrf.field_name">_token</parameter>
-    <parameter key="validator.mapping.cache.file">C:/wamp64/www/symfony-2025/var/cache/dev/validation.php</parameter>
+    <parameter key="validator.mapping.cache.file">C:\wamp64\www\symfony-2025\var\cache\dev/validation.php</parameter>
     <parameter key="validator.translation_domain">validators</parameter>
     <parameter key="data_collector.templates" type="collection"/>
     <parameter key="twig.form.resources" type="collection">
@@ -195,7 +195,7 @@
     <parameter key="doctrine.orm.auto_generate_proxy_classes">true</parameter>
     <parameter key="doctrine.orm.enable_lazy_ghost_objects">true</parameter>
     <parameter key="doctrine.orm.enable_native_lazy_objects">false</parameter>
-    <parameter key="doctrine.orm.proxy_dir">C:/wamp64/www/symfony-2025/var/cache/dev/doctrine/orm/Proxies</parameter>
+    <parameter key="doctrine.orm.proxy_dir">C:\wamp64\www\symfony-2025\var\cache\dev/doctrine/orm/Proxies</parameter>
     <parameter key="doctrine.orm.proxy_namespace">Proxies</parameter>
     <parameter key="doctrine.migrations.preferred_em">null</parameter>
     <parameter key="doctrine.migrations.preferred_connection">null</parameter>
@@ -410,104 +410,6 @@
     <service id="App\Entity" class="App\Entity" abstract="true">
       <tag name="container.excluded" source="in &quot;config/services.yaml&quot;"/>
     </service>
-    <service id="App\Controller\AttendanceController" class="App\Controller\AttendanceController" public="true" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
-      <tag name="container.service_subscriber"/>
-      <argument type="service" id="doctrine.orm.default_entity_manager"/>
-      <argument type="service" id="App\Services\Attendance\AttendanceService"/>
-      <argument type="service" id="App\Services\RequestCheckerService"/>
-      <argument type="service" id="App\Repository\AttendanceRepository"/>
-      <call method="setContainer">
-        <argument type="service" id=".service_locator.O2p6Lk7.App\Controller\AttendanceController"/>
-      </call>
-    </service>
-    <service id="App\Controller\ClientController" class="App\Controller\ClientController" public="true" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
-      <tag name="container.service_subscriber"/>
-      <argument type="service" id="App\Services\Client\ClientService"/>
-      <argument type="service" id="App\Services\RequestCheckerService"/>
-      <argument type="service" id="doctrine.orm.default_entity_manager"/>
-      <argument type="service" id="App\Repository\ClientRepository"/>
-      <call method="setContainer">
-        <argument type="service" id=".service_locator.O2p6Lk7.App\Controller\ClientController"/>
-      </call>
-    </service>
-    <service id="App\Controller\ClientProgramsController" class="App\Controller\ClientProgramsController" public="true" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
-      <tag name="container.service_subscriber"/>
-      <argument type="service" id="doctrine.orm.default_entity_manager"/>
-      <argument type="service" id="App\Services\ClientPrograms\ClientProgramsService"/>
-      <argument type="service" id="App\Services\RequestCheckerService"/>
-      <argument type="service" id="App\Repository\ClientProgramsRepository"/>
-      <call method="setContainer">
-        <argument type="service" id=".service_locator.O2p6Lk7.App\Controller\ClientProgramsController"/>
-      </call>
-    </service>
-    <service id="App\Controller\ClientSessionController" class="App\Controller\ClientSessionController" public="true" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
-      <tag name="container.service_subscriber"/>
-      <argument type="service" id="doctrine.orm.default_entity_manager"/>
-      <argument type="service" id="App\Services\ClientSession\ClientSessionService"/>
-      <argument type="service" id="App\Services\RequestCheckerService"/>
-      <argument type="service" id="App\Repository\ClientSessionRepository"/>
-      <call method="setContainer">
-        <argument type="service" id=".service_locator.O2p6Lk7.App\Controller\ClientSessionController"/>
-      </call>
-    </service>
-    <service id="App\Controller\EqipmentController" class="App\Controller\EqipmentController" public="true" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
-      <tag name="container.service_subscriber"/>
-      <argument type="service" id="App\Services\Eqipment\EqipmentService"/>
-      <argument type="service" id="App\Services\RequestCheckerService"/>
-      <argument type="service" id="doctrine.orm.default_entity_manager"/>
-      <argument type="service" id="App\Repository\EqipmentRepository"/>
-      <call method="setContainer">
-        <argument type="service" id=".service_locator.O2p6Lk7.App\Controller\EqipmentController"/>
-      </call>
-    </service>
-    <service id="App\Controller\PaymentsController" class="App\Controller\PaymentsController" public="true" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
-      <tag name="container.service_subscriber"/>
-      <argument type="service" id="App\Services\Payment\PaymentService"/>
-      <argument type="service" id="App\Services\RequestCheckerService"/>
-      <argument type="service" id="doctrine.orm.default_entity_manager"/>
-      <argument type="service" id="App\Repository\PaymentsRepository"/>
-      <call method="setContainer">
-        <argument type="service" id=".service_locator.O2p6Lk7.App\Controller\PaymentsController"/>
-      </call>
-    </service>
-    <service id="App\Controller\ProgramsController" class="App\Controller\ProgramsController" public="true" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
-      <tag name="container.service_subscriber"/>
-      <argument type="service" id="App\Services\Program\ProgramService"/>
-      <argument type="service" id="App\Services\ValidatorService"/>
-      <argument type="service" id="App\Repository\ProgramsRepository"/>
-      <call method="setContainer">
-        <argument type="service" id=".service_locator.O2p6Lk7.App\Controller\ProgramsController"/>
-      </call>
-    </service>
-    <service id="App\Controller\SessionController" class="App\Controller\SessionController" public="true" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
-      <tag name="container.service_subscriber"/>
-      <argument type="service" id="App\Services\Session\SessionService"/>
-      <argument type="service" id="App\Services\RequestCheckerService"/>
-      <argument type="service" id="doctrine.orm.default_entity_manager"/>
-      <argument type="service" id="App\Repository\SessionRepository"/>
-      <call method="setContainer">
-        <argument type="service" id=".service_locator.O2p6Lk7.App\Controller\SessionController"/>
-      </call>
-    </service>
-    <service id="App\Controller\TrainersController" class="App\Controller\TrainersController" public="true" autowire="true" autoconfigure="true">
-      <tag name="controller.service_arguments"/>
-      <tag name="container.service_subscriber"/>
-      <argument type="service" id="App\Services\Trainer\TrainerService"/>
-      <argument type="service" id="App\Services\RequestCheckerService"/>
-      <argument type="service" id="doctrine.orm.default_entity_manager"/>
-      <argument type="service" id="App\Repository\TrainersRepository"/>
-      <call method="setContainer">
-        <argument type="service" id=".service_locator.O2p6Lk7.App\Controller\TrainersController"/>
-      </call>
-    </service>
     <service id="App\EventListener\RuntimeConstraintExceptionListener" class="App\EventListener\RuntimeConstraintExceptionListener" autowire="true" autoconfigure="true">
       <tag name="kernel.event_listener" event="kernel.exception"/>
     </service>
@@ -659,7 +561,7 @@
     </service>
     <service id="argument_resolver.service" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">
       <tag priority="-50" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\ServiceValueResolver">controller.argument_value_resolver</tag>
-      <argument type="service" id=".service_locator.6izWoeD"/>
+      <argument type="service" id=".service_locator.HBdvAhp"/>
     </service>
     <service id="argument_resolver.default" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">
       <tag priority="-100" name="Symfony\Component\HttpKernel\Controller\ArgumentResolver\DefaultValueResolver">controller.argument_value_resolver</tag>
@@ -742,7 +644,7 @@
       </argument>
     </service>
     <service id="http_cache.store" class="Symfony\Component\HttpKernel\HttpCache\Store">
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/http_cache</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/http_cache</argument>
     </service>
     <service id="url_helper" class="Symfony\Component\HttpFoundation\UrlHelper">
       <argument type="service" id="request_stack"/>
@@ -752,7 +654,7 @@
       <tag name="container.no_preload"/>
       <argument type="tagged_iterator" tag="kernel.cache_warmer"/>
       <argument>true</argument>
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/App_KernelDevDebugContainerDeprecations.log</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/App_KernelDevDebugContainerDeprecations.log</argument>
     </service>
     <service id="cache_clearer" class="Symfony\Component\HttpKernel\CacheClearer\ChainCacheClearer">
       <argument type="tagged_iterator" tag="kernel.cache_clearer"/>
@@ -922,7 +824,7 @@
     <service id="container.get_routing_condition_service" class="Closure" public="true">
       <tag name="routing.expression_language_function" function="service"/>
       <argument type="collection">
-        <argument type="service" id="api_platform.filter_locator"/>
+        <argument type="service" id=".service_locator.Xbsa8iG"/>
         <argument>get</argument>
       </argument>
       <factory class="Closure" method="fromCallable"/>
@@ -1415,7 +1317,7 @@
       <tag name="kernel.reset" method="reset"/>
       <argument>-Uu1jTF5jv</argument>
       <argument>0</argument>
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/pools/app</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/pools/app</argument>
       <argument type="service" id="cache.default_marshaller" on-invalid="ignore"/>
       <call method="setLogger">
         <argument type="service" id="logger" on-invalid="ignore"/>
@@ -1431,7 +1333,7 @@
       <argument>3oEP5lLnvK</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/pools/system</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -1441,7 +1343,7 @@
       <argument>phhuDPBmJO</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/pools/system</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -1451,7 +1353,7 @@
       <argument>s7D7I1V3L4</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/pools/system</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -1461,7 +1363,7 @@
       <argument>J4AHwF4m3w</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/pools/system</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -1471,7 +1373,7 @@
       <argument>d6iyHDQshe</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/pools/system</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -1481,7 +1383,7 @@
       <argument></argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/pools/system</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -1500,7 +1402,7 @@
       <tag name="monolog.logger" channel="cache"/>
       <argument></argument>
       <argument>0</argument>
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/pools/app</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/pools/app</argument>
       <argument type="service" id="cache.default_marshaller" on-invalid="ignore"/>
       <call method="setLogger">
         <argument type="service" id="logger" on-invalid="ignore"/>
@@ -2077,7 +1979,7 @@
     </service>
     <service id="argument_resolver.not_tagged_controller" class="Symfony\Component\HttpKernel\Controller\ArgumentResolver\NotTaggedControllerValueResolver">
       <tag name="controller.argument_value_resolver" priority="-200"/>
-      <argument type="service" id=".service_locator.6izWoeD"/>
+      <argument type="service" id=".service_locator.HBdvAhp"/>
     </service>
     <service id="routing.resolver" class="Symfony\Component\Config\Loader\LoaderResolver">
       <call method="addLoader">
@@ -2175,7 +2077,7 @@
       <argument type="service" id=".service_locator.PvoQzFT.router.default"/>
       <argument>kernel::loadRoutes</argument>
       <argument type="collection">
-        <argument key="cache_dir">C:/wamp64/www/symfony-2025/var/cache/dev</argument>
+        <argument key="cache_dir">C:\wamp64\www\symfony-2025\var\cache\dev</argument>
         <argument key="debug">true</argument>
         <argument key="generator_class">Symfony\Component\Routing\Generator\CompiledUrlGenerator</argument>
         <argument key="generator_dumper_class">Symfony\Component\Routing\Generator\Dumper\CompiledUrlGeneratorDumper</argument>
@@ -2409,10 +2311,10 @@
           </service>
         </argument>
       </argument>
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/serialization.php</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/serialization.php</argument>
     </service>
     <service id="serializer.mapping.cache.symfony" class="Psr\Cache\CacheItemPoolInterface">
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/serialization.php</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/serialization.php</argument>
       <argument type="service" id="cache.serializer"/>
       <factory class="Symfony\Component\Cache\Adapter\PhpArrayAdapter" method="create"/>
     </service>
@@ -2579,7 +2481,7 @@
       <argument>true</argument>
     </service>
     <service id="session.storage.factory.mock_file" class="Symfony\Component\HttpFoundation\Session\Storage\MockFileSessionStorageFactory">
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/sessions</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/sessions</argument>
       <argument>MOCKSESSID</argument>
       <argument type="service">
         <service class="Symfony\Component\HttpFoundation\Session\Storage\MetadataBag">
@@ -2740,7 +2642,7 @@
         <argument type="service" id="validator.validator_factory"/>
       </call>
       <call method="setGroupProviderLocator">
-        <argument type="service" id="api_platform.filter_locator"/>
+        <argument type="service" id=".service_locator.Xbsa8iG"/>
       </call>
       <call method="setTranslationDomain">
         <argument>validators</argument>
@@ -2772,10 +2674,10 @@
     <service id="validator.mapping.cache_warmer" class="Symfony\Bundle\FrameworkBundle\CacheWarmer\ValidatorCacheWarmer">
       <tag name="kernel.cache_warmer"/>
       <argument type="service" id="validator.builder"/>
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/validation.php</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/validation.php</argument>
     </service>
     <service id="validator.mapping.cache.adapter" class="Symfony\Component\Cache\Adapter\PhpArrayAdapter" constructor="create">
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/validation.php</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/validation.php</argument>
       <argument type="service" id="cache.validator"/>
     </service>
     <service id="validator.validator_factory" class="Symfony\Component\Validator\ContainerConstraintValidatorFactory">
@@ -3044,7 +2946,7 @@
       <argument>0LRVezC5R9</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/pools/system</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -3293,7 +3195,7 @@
       <argument type="service" id="twig.loader.native_filesystem"/>
       <argument type="collection">
         <argument key="autoescape">name</argument>
-        <argument key="cache">C:/wamp64/www/symfony-2025/var/cache/dev/twig</argument>
+        <argument key="cache">C:\wamp64\www\symfony-2025\var\cache\dev/twig</argument>
         <argument key="charset">UTF-8</argument>
         <argument key="debug">true</argument>
         <argument key="strict_variables">true</argument>
@@ -3487,7 +3389,7 @@
       <tag name="twig.extension"/>
     </service>
     <service id="twig.extension.htmlsanitizer" class="Symfony\Bridge\Twig\Extension\HtmlSanitizerExtension">
-      <argument type="service" id="api_platform.filter_locator"/>
+      <argument type="service" id=".service_locator.Xbsa8iG"/>
     </service>
     <service id="twig.extension.httpkernel" class="Symfony\Bridge\Twig\Extension\HttpKernelExtension">
       <tag name="twig.extension"/>
@@ -3970,7 +3872,7 @@
         <argument type="service" id=".doctrine.orm.default_metadata_driver"/>
       </call>
       <call method="setProxyDir">
-        <argument>C:/wamp64/www/symfony-2025/var/cache/dev/doctrine/orm/Proxies</argument>
+        <argument>C:\wamp64\www\symfony-2025\var\cache\dev/doctrine/orm/Proxies</argument>
       </call>
       <call method="setProxyNamespace">
         <argument>Proxies</argument>
@@ -4407,7 +4309,7 @@
       <argument>imrZEnCJTI</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/pools/system</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -4426,7 +4328,7 @@
       <argument>0Zl+GPx37W</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/pools/system</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -5051,7 +4953,7 @@
       <argument>VN4-LhzCyR</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/pools/system</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -5115,7 +5017,23 @@
     </service>
     <service id="api_platform.filter_locator" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
-      <argument type="collection"/>
+      <argument type="collection">
+        <argument key="annotated_app_entity_attendance_api_platform_doctrine_orm_filter_search_filter" type="service_closure" id="annotated_app_entity_attendance_api_platform_doctrine_orm_filter_search_filter"/>
+        <argument key="annotated_app_entity_client_api_platform_doctrine_orm_filter_order_filter" type="service_closure" id="annotated_app_entity_client_api_platform_doctrine_orm_filter_order_filter"/>
+        <argument key="annotated_app_entity_client_api_platform_doctrine_orm_filter_search_filter" type="service_closure" id="annotated_app_entity_client_api_platform_doctrine_orm_filter_search_filter"/>
+        <argument key="annotated_app_entity_client_programs_api_platform_doctrine_orm_filter_date_filter" type="service_closure" id="annotated_app_entity_client_programs_api_platform_doctrine_orm_filter_date_filter"/>
+        <argument key="annotated_app_entity_client_programs_api_platform_doctrine_orm_filter_search_filter" type="service_closure" id="annotated_app_entity_client_programs_api_platform_doctrine_orm_filter_search_filter"/>
+        <argument key="annotated_app_entity_client_session_api_platform_doctrine_orm_filter_search_filter" type="service_closure" id="annotated_app_entity_client_session_api_platform_doctrine_orm_filter_search_filter"/>
+        <argument key="annotated_app_entity_eqipment_api_platform_doctrine_orm_filter_search_filter" type="service_closure" id="annotated_app_entity_eqipment_api_platform_doctrine_orm_filter_search_filter"/>
+        <argument key="annotated_app_entity_payments_api_platform_doctrine_orm_filter_date_filter" type="service_closure" id="annotated_app_entity_payments_api_platform_doctrine_orm_filter_date_filter"/>
+        <argument key="annotated_app_entity_payments_api_platform_doctrine_orm_filter_order_filter" type="service_closure" id="annotated_app_entity_payments_api_platform_doctrine_orm_filter_order_filter"/>
+        <argument key="annotated_app_entity_payments_api_platform_doctrine_orm_filter_search_filter" type="service_closure" id="annotated_app_entity_payments_api_platform_doctrine_orm_filter_search_filter"/>
+        <argument key="annotated_app_entity_programs_api_platform_doctrine_orm_filter_search_filter" type="service_closure" id="annotated_app_entity_programs_api_platform_doctrine_orm_filter_search_filter"/>
+        <argument key="annotated_app_entity_session_api_platform_doctrine_orm_filter_date_filter" type="service_closure" id="annotated_app_entity_session_api_platform_doctrine_orm_filter_date_filter"/>
+        <argument key="annotated_app_entity_session_api_platform_doctrine_orm_filter_search_filter" type="service_closure" id="annotated_app_entity_session_api_platform_doctrine_orm_filter_search_filter"/>
+        <argument key="annotated_app_entity_trainer_programs_api_platform_doctrine_orm_filter_search_filter" type="service_closure" id="annotated_app_entity_trainer_programs_api_platform_doctrine_orm_filter_search_filter"/>
+        <argument key="annotated_app_entity_trainers_api_platform_doctrine_orm_filter_search_filter" type="service_closure" id="annotated_app_entity_trainers_api_platform_doctrine_orm_filter_search_filter"/>
+      </argument>
     </service>
     <service id="api_platform.symfony.uri_variables.transformer.ulid" class="ApiPlatform\Symfony\UriVariableTransformer\UlidUriVariableTransformer">
       <tag name="api_platform.uri_variables.transformer"/>
@@ -5207,7 +5125,7 @@
       <argument>fCXvtgSBXM</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/pools/system</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -5292,7 +5210,7 @@
       <argument>ogbPZe91MI</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/pools/system</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -5380,7 +5298,7 @@
       <argument>029+MlRfSb</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/pools/system</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -5509,7 +5427,7 @@
       <argument>aiptDqFrYH</argument>
       <argument>0</argument>
       <argument>%container.build_id%</argument>
-      <argument>C:/wamp64/www/symfony-2025/var/cache/dev/pools/system</argument>
+      <argument>C:\wamp64\www\symfony-2025\var\cache\dev/pools/system</argument>
       <argument type="service" id="logger" on-invalid="ignore"/>
       <factory class="Symfony\Component\Cache\Adapter\AbstractAdapter" method="createSystemCache"/>
     </service>
@@ -5910,7 +5828,7 @@
     </service>
     <service id="api_platform.validator" class="ApiPlatform\Symfony\Validator\Validator">
       <argument type="service" id="validator"/>
-      <argument type="service" id="api_platform.filter_locator"/>
+      <argument type="service" id=".service_locator.Xbsa8iG"/>
     </service>
     <service id="api_platform.validator.state.error_provider" class="ApiPlatform\Symfony\Validator\State\ErrorProvider">
       <tag name="api_platform.state_provider" key="api_platform.validator.state.error_provider"/>
@@ -5985,33 +5903,192 @@
       <argument type="service" id="api_platform.metadata.resource.metadata_collection_factory.cached"/>
       <argument type="service" id="api_platform.openapi.serializer_context_builder"/>
     </service>
-    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\AttendanceController" class="App\Controller\AttendanceController" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\AttendanceController" class="App\Controller\AttendanceController" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Controller\AttendanceController" class="App\Controller\AttendanceController" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ClientController" class="App\Controller\ClientController" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ClientController" class="App\Controller\ClientController" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Controller\ClientController" class="App\Controller\ClientController" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ClientProgramsController" class="App\Controller\ClientProgramsController" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ClientProgramsController" class="App\Controller\ClientProgramsController" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Controller\ClientProgramsController" class="App\Controller\ClientProgramsController" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ClientSessionController" class="App\Controller\ClientSessionController" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ClientSessionController" class="App\Controller\ClientSessionController" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Controller\ClientSessionController" class="App\Controller\ClientSessionController" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\EqipmentController" class="App\Controller\EqipmentController" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\EqipmentController" class="App\Controller\EqipmentController" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Controller\EqipmentController" class="App\Controller\EqipmentController" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\PaymentsController" class="App\Controller\PaymentsController" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\PaymentsController" class="App\Controller\PaymentsController" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Controller\PaymentsController" class="App\Controller\PaymentsController" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\ProgramsController" class="App\Controller\ProgramsController" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\ProgramsController" class="App\Controller\ProgramsController" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Controller\ProgramsController" class="App\Controller\ProgramsController" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\SessionController" class="App\Controller\SessionController" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\SessionController" class="App\Controller\SessionController" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Controller\SessionController" class="App\Controller\SessionController" autowire="true" autoconfigure="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Contracts\Service\ServiceSubscriberInterface.0.App\Controller\TrainersController" class="App\Controller\TrainersController" autowire="true" abstract="true"/>
-    <service id=".instanceof.Symfony\Bundle\FrameworkBundle\Controller\AbstractController.0.App\Controller\TrainersController" class="App\Controller\TrainersController" autowire="true" abstract="true"/>
-    <service id=".abstract.instanceof.App\Controller\TrainersController" class="App\Controller\TrainersController" autowire="true" autoconfigure="true" abstract="true"/>
+    <service id="annotated_app_entity_attendance_api_platform_doctrine_orm_filter_search_filter" class="ApiPlatform\Doctrine\Orm\Filter\SearchFilter" autowire="true">
+      <tag name="api_platform.filter"/>
+      <argument type="service" id="doctrine"/>
+      <argument type="service" id="api_platform.symfony.iri_converter"/>
+      <argument type="service" id="property_accessor"/>
+      <argument type="service" id="logger" on-invalid="ignore"/>
+      <argument type="collection">
+        <argument key="client.id">exact</argument>
+        <argument key="session.id">exact</argument>
+        <argument key="attended">exact</argument>
+      </argument>
+      <argument type="service" id="api_platform.api.identifiers_extractor" on-invalid="ignore"/>
+      <argument type="service" id="api_platform.hydra.name_converter.hydra_prefix" on-invalid="ignore"/>
+    </service>
+    <service id="annotated_app_entity_client_api_platform_doctrine_orm_filter_search_filter" class="ApiPlatform\Doctrine\Orm\Filter\SearchFilter" autowire="true">
+      <tag name="api_platform.filter"/>
+      <argument type="service" id="doctrine"/>
+      <argument type="service" id="api_platform.symfony.iri_converter"/>
+      <argument type="service" id="property_accessor"/>
+      <argument type="service" id="logger" on-invalid="ignore"/>
+      <argument type="collection">
+        <argument key="first_name">partial</argument>
+        <argument key="last_name">partial</argument>
+        <argument key="email">exact</argument>
+      </argument>
+      <argument type="service" id="api_platform.api.identifiers_extractor" on-invalid="ignore"/>
+      <argument type="service" id="api_platform.hydra.name_converter.hydra_prefix" on-invalid="ignore"/>
+    </service>
+    <service id="annotated_app_entity_client_api_platform_doctrine_orm_filter_order_filter" class="ApiPlatform\Doctrine\Orm\Filter\OrderFilter" autowire="true">
+      <tag name="api_platform.filter"/>
+      <argument type="service" id="doctrine"/>
+      <argument>order</argument>
+      <argument type="service" id="logger" on-invalid="ignore"/>
+      <argument type="collection">
+        <argument key="id">null</argument>
+        <argument key="last_name">null</argument>
+        <argument key="email">null</argument>
+      </argument>
+      <argument type="service" id="api_platform.hydra.name_converter.hydra_prefix" on-invalid="ignore"/>
+      <argument>null</argument>
+    </service>
+    <service id="annotated_app_entity_client_programs_api_platform_doctrine_orm_filter_search_filter" class="ApiPlatform\Doctrine\Orm\Filter\SearchFilter" autowire="true">
+      <tag name="api_platform.filter"/>
+      <argument type="service" id="doctrine"/>
+      <argument type="service" id="api_platform.symfony.iri_converter"/>
+      <argument type="service" id="property_accessor"/>
+      <argument type="service" id="logger" on-invalid="ignore"/>
+      <argument type="collection">
+        <argument key="client.id">exact</argument>
+        <argument key="program.id">exact</argument>
+      </argument>
+      <argument type="service" id="api_platform.api.identifiers_extractor" on-invalid="ignore"/>
+      <argument type="service" id="api_platform.hydra.name_converter.hydra_prefix" on-invalid="ignore"/>
+    </service>
+    <service id="annotated_app_entity_client_programs_api_platform_doctrine_orm_filter_date_filter" class="ApiPlatform\Doctrine\Orm\Filter\DateFilter" autowire="true">
+      <tag name="api_platform.filter"/>
+      <argument type="service" id="doctrine"/>
+      <argument type="service" id="logger" on-invalid="ignore"/>
+      <argument type="collection">
+        <argument key="start_date">null</argument>
+        <argument key="end_date">null</argument>
+      </argument>
+      <argument type="service" id="api_platform.hydra.name_converter.hydra_prefix" on-invalid="ignore"/>
+    </service>
+    <service id="annotated_app_entity_client_session_api_platform_doctrine_orm_filter_search_filter" class="ApiPlatform\Doctrine\Orm\Filter\SearchFilter" autowire="true">
+      <tag name="api_platform.filter"/>
+      <argument type="service" id="doctrine"/>
+      <argument type="service" id="api_platform.symfony.iri_converter"/>
+      <argument type="service" id="property_accessor"/>
+      <argument type="service" id="logger" on-invalid="ignore"/>
+      <argument type="collection">
+        <argument key="client.id">exact</argument>
+        <argument key="session.id">exact</argument>
+      </argument>
+      <argument type="service" id="api_platform.api.identifiers_extractor" on-invalid="ignore"/>
+      <argument type="service" id="api_platform.hydra.name_converter.hydra_prefix" on-invalid="ignore"/>
+    </service>
+    <service id="annotated_app_entity_eqipment_api_platform_doctrine_orm_filter_search_filter" class="ApiPlatform\Doctrine\Orm\Filter\SearchFilter" autowire="true">
+      <tag name="api_platform.filter"/>
+      <argument type="service" id="doctrine"/>
+      <argument type="service" id="api_platform.symfony.iri_converter"/>
+      <argument type="service" id="property_accessor"/>
+      <argument type="service" id="logger" on-invalid="ignore"/>
+      <argument type="collection">
+        <argument key="name">partial</argument>
+        <argument key="description">partial</argument>
+      </argument>
+      <argument type="service" id="api_platform.api.identifiers_extractor" on-invalid="ignore"/>
+      <argument type="service" id="api_platform.hydra.name_converter.hydra_prefix" on-invalid="ignore"/>
+    </service>
+    <service id="annotated_app_entity_payments_api_platform_doctrine_orm_filter_search_filter" class="ApiPlatform\Doctrine\Orm\Filter\SearchFilter" autowire="true">
+      <tag name="api_platform.filter"/>
+      <argument type="service" id="doctrine"/>
+      <argument type="service" id="api_platform.symfony.iri_converter"/>
+      <argument type="service" id="property_accessor"/>
+      <argument type="service" id="logger" on-invalid="ignore"/>
+      <argument type="collection">
+        <argument key="client.id">exact</argument>
+      </argument>
+      <argument type="service" id="api_platform.api.identifiers_extractor" on-invalid="ignore"/>
+      <argument type="service" id="api_platform.hydra.name_converter.hydra_prefix" on-invalid="ignore"/>
+    </service>
+    <service id="annotated_app_entity_payments_api_platform_doctrine_orm_filter_date_filter" class="ApiPlatform\Doctrine\Orm\Filter\DateFilter" autowire="true">
+      <tag name="api_platform.filter"/>
+      <argument type="service" id="doctrine"/>
+      <argument type="service" id="logger" on-invalid="ignore"/>
+      <argument type="collection">
+        <argument key="payment_date">null</argument>
+      </argument>
+      <argument type="service" id="api_platform.hydra.name_converter.hydra_prefix" on-invalid="ignore"/>
+    </service>
+    <service id="annotated_app_entity_payments_api_platform_doctrine_orm_filter_order_filter" class="ApiPlatform\Doctrine\Orm\Filter\OrderFilter" autowire="true">
+      <tag name="api_platform.filter"/>
+      <argument type="service" id="doctrine"/>
+      <argument>order</argument>
+      <argument type="service" id="logger" on-invalid="ignore"/>
+      <argument type="collection">
+        <argument key="amount">null</argument>
+        <argument key="payment_date">null</argument>
+      </argument>
+      <argument type="service" id="api_platform.hydra.name_converter.hydra_prefix" on-invalid="ignore"/>
+      <argument>null</argument>
+    </service>
+    <service id="annotated_app_entity_programs_api_platform_doctrine_orm_filter_search_filter" class="ApiPlatform\Doctrine\Orm\Filter\SearchFilter" autowire="true">
+      <tag name="api_platform.filter"/>
+      <argument type="service" id="doctrine"/>
+      <argument type="service" id="api_platform.symfony.iri_converter"/>
+      <argument type="service" id="property_accessor"/>
+      <argument type="service" id="logger" on-invalid="ignore"/>
+      <argument type="collection">
+        <argument key="name">partial</argument>
+        <argument key="description">partial</argument>
+        <argument key="duration_weeks">exact</argument>
+      </argument>
+      <argument type="service" id="api_platform.api.identifiers_extractor" on-invalid="ignore"/>
+      <argument type="service" id="api_platform.hydra.name_converter.hydra_prefix" on-invalid="ignore"/>
+    </service>
+    <service id="annotated_app_entity_session_api_platform_doctrine_orm_filter_search_filter" class="ApiPlatform\Doctrine\Orm\Filter\SearchFilter" autowire="true">
+      <tag name="api_platform.filter"/>
+      <argument type="service" id="doctrine"/>
+      <argument type="service" id="api_platform.symfony.iri_converter"/>
+      <argument type="service" id="property_accessor"/>
+      <argument type="service" id="logger" on-invalid="ignore"/>
+      <argument type="collection">
+        <argument key="trainer.id">exact</argument>
+        <argument key="program.id">exact</argument>
+      </argument>
+      <argument type="service" id="api_platform.api.identifiers_extractor" on-invalid="ignore"/>
+      <argument type="service" id="api_platform.hydra.name_converter.hydra_prefix" on-invalid="ignore"/>
+    </service>
+    <service id="annotated_app_entity_session_api_platform_doctrine_orm_filter_date_filter" class="ApiPlatform\Doctrine\Orm\Filter\DateFilter" autowire="true">
+      <tag name="api_platform.filter"/>
+      <argument type="service" id="doctrine"/>
+      <argument type="service" id="logger" on-invalid="ignore"/>
+      <argument type="collection">
+        <argument key="session_date">null</argument>
+      </argument>
+      <argument type="service" id="api_platform.hydra.name_converter.hydra_prefix" on-invalid="ignore"/>
+    </service>
+    <service id="annotated_app_entity_trainer_programs_api_platform_doctrine_orm_filter_search_filter" class="ApiPlatform\Doctrine\Orm\Filter\SearchFilter" autowire="true">
+      <tag name="api_platform.filter"/>
+      <argument type="service" id="doctrine"/>
+      <argument type="service" id="api_platform.symfony.iri_converter"/>
+      <argument type="service" id="property_accessor"/>
+      <argument type="service" id="logger" on-invalid="ignore"/>
+      <argument type="collection">
+        <argument key="trainer.id">exact</argument>
+        <argument key="program.id">exact</argument>
+      </argument>
+      <argument type="service" id="api_platform.api.identifiers_extractor" on-invalid="ignore"/>
+      <argument type="service" id="api_platform.hydra.name_converter.hydra_prefix" on-invalid="ignore"/>
+    </service>
+    <service id="annotated_app_entity_trainers_api_platform_doctrine_orm_filter_search_filter" class="ApiPlatform\Doctrine\Orm\Filter\SearchFilter" autowire="true">
+      <tag name="api_platform.filter"/>
+      <argument type="service" id="doctrine"/>
+      <argument type="service" id="api_platform.symfony.iri_converter"/>
+      <argument type="service" id="property_accessor"/>
+      <argument type="service" id="logger" on-invalid="ignore"/>
+      <argument type="collection">
+        <argument key="last_name">partial</argument>
+        <argument key="specialty">partial</argument>
+        <argument key="phone">exact</argument>
+      </argument>
+      <argument type="service" id="api_platform.api.identifiers_extractor" on-invalid="ignore"/>
+      <argument type="service" id="api_platform.hydra.name_converter.hydra_prefix" on-invalid="ignore"/>
+    </service>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\AttendanceType" class="App\Form\AttendanceType" autowire="true" abstract="true"/>
     <service id=".abstract.instanceof.App\Form\AttendanceType" class="App\Form\AttendanceType" autowire="true" autoconfigure="true" abstract="true"/>
     <service id=".instanceof.Symfony\Component\Form\FormTypeInterface.0.App\Form\ClientProgramsType" class="App\Form\ClientProgramsType" autowire="true" abstract="true"/>
@@ -6513,25 +6590,13 @@
         <argument key="loader" type="service_closure" id=".errored..service_locator.y4_Zrx..Symfony\Component\Config\Loader\LoaderInterface"/>
       </argument>
     </service>
-    <service id=".service_locator.sLMGPaz" class="Symfony\Component\DependencyInjection\ServiceLocator">
+    <service id=".service_locator.HBdvAhp" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
-        <argument key="program" type="service_closure" id=".errored..service_locator.sLMGPaz.App\Entity\Programs"/>
-      </argument>
-    </service>
-    <service id=".service_locator.6izWoeD" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="App\Controller\ProgramsController::delete" type="service_closure" id=".service_locator.sLMGPaz"/>
-        <argument key="App\Controller\ProgramsController::edit" type="service_closure" id=".service_locator.sLMGPaz"/>
-        <argument key="App\Controller\ProgramsController::show" type="service_closure" id=".service_locator.sLMGPaz"/>
         <argument key="App\Kernel::loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="App\Kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel::loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel::registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
-        <argument key="App\Controller\ProgramsController:delete" type="service_closure" id=".service_locator.sLMGPaz"/>
-        <argument key="App\Controller\ProgramsController:edit" type="service_closure" id=".service_locator.sLMGPaz"/>
-        <argument key="App\Controller\ProgramsController:show" type="service_closure" id=".service_locator.sLMGPaz"/>
         <argument key="kernel:loadRoutes" type="service_closure" id=".service_locator.y4_Zrx."/>
         <argument key="kernel:registerContainerConfiguration" type="service_closure" id=".service_locator.y4_Zrx."/>
       </argument>
@@ -6782,76 +6847,6 @@
         <argument>0</argument>
       </call>
     </service>
-    <service id=".service_locator.O2p6Lk7" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator"/>
-      <argument type="collection">
-        <argument key="form.factory" type="service_closure" id="form.factory" on-invalid="ignore"/>
-        <argument key="http_kernel" type="service_closure" id="http_kernel" on-invalid="ignore"/>
-        <argument key="parameter_bag" type="service_closure" id="parameter_bag" on-invalid="ignore"/>
-        <argument key="request_stack" type="service_closure" id="request_stack" on-invalid="ignore"/>
-        <argument key="router" type="service_closure" id="router.default" on-invalid="ignore"/>
-        <argument key="security.authorization_checker" type="service_closure" id="security.authorization_checker" on-invalid="ignore"/>
-        <argument key="security.csrf.token_manager" type="service_closure" id="security.csrf.token_manager" on-invalid="ignore"/>
-        <argument key="security.token_storage" type="service_closure" id="security.token_storage" on-invalid="ignore"/>
-        <argument key="serializer" type="service_closure" id="serializer" on-invalid="ignore"/>
-        <argument key="twig" type="service_closure" id="twig" on-invalid="ignore"/>
-        <argument key="web_link.http_header_serializer" type="service_closure" id="web_link.http_header_serializer" on-invalid="ignore"/>
-      </argument>
-    </service>
-    <service id=".service_locator.O2p6Lk7.App\Controller\AttendanceController" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\AttendanceController"/>
-      <argument>App\Controller\AttendanceController</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.O2p6Lk7" method="withContext"/>
-    </service>
-    <service id=".service_locator.O2p6Lk7.App\Controller\ClientController" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ClientController"/>
-      <argument>App\Controller\ClientController</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.O2p6Lk7" method="withContext"/>
-    </service>
-    <service id=".service_locator.O2p6Lk7.App\Controller\ClientProgramsController" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ClientProgramsController"/>
-      <argument>App\Controller\ClientProgramsController</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.O2p6Lk7" method="withContext"/>
-    </service>
-    <service id=".service_locator.O2p6Lk7.App\Controller\ClientSessionController" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ClientSessionController"/>
-      <argument>App\Controller\ClientSessionController</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.O2p6Lk7" method="withContext"/>
-    </service>
-    <service id=".service_locator.O2p6Lk7.App\Controller\EqipmentController" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\EqipmentController"/>
-      <argument>App\Controller\EqipmentController</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.O2p6Lk7" method="withContext"/>
-    </service>
-    <service id=".service_locator.O2p6Lk7.App\Controller\PaymentsController" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\PaymentsController"/>
-      <argument>App\Controller\PaymentsController</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.O2p6Lk7" method="withContext"/>
-    </service>
-    <service id=".service_locator.O2p6Lk7.App\Controller\ProgramsController" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\ProgramsController"/>
-      <argument>App\Controller\ProgramsController</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.O2p6Lk7" method="withContext"/>
-    </service>
-    <service id=".service_locator.O2p6Lk7.App\Controller\SessionController" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\SessionController"/>
-      <argument>App\Controller\SessionController</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.O2p6Lk7" method="withContext"/>
-    </service>
-    <service id=".service_locator.O2p6Lk7.App\Controller\TrainersController" class="Symfony\Component\DependencyInjection\ServiceLocator">
-      <tag name="container.service_locator_context" id="App\Controller\TrainersController"/>
-      <argument>App\Controller\TrainersController</argument>
-      <argument type="service" id="service_container"/>
-      <factory service=".service_locator.O2p6Lk7" method="withContext"/>
-    </service>
     <service id=".service_locator.PvoQzFT" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
       <argument type="collection">
@@ -6914,6 +6909,10 @@
       <argument type="collection">
         <argument key="reverse_container" type="service_closure" id="reverse_container" on-invalid="ignore_uninitialized"/>
       </argument>
+    </service>
+    <service id=".service_locator.Xbsa8iG" class="Symfony\Component\DependencyInjection\ServiceLocator">
+      <tag name="container.service_locator"/>
+      <argument type="collection"/>
     </service>
     <service id=".service_locator.NBUFN6A" class="Symfony\Component\DependencyInjection\ServiceLocator">
       <tag name="container.service_locator"/>
@@ -7037,15 +7036,6 @@
       <call method="allowControllers">
         <argument type="collection">
           <argument>App\Kernel</argument>
-          <argument>App\Controller\AttendanceController</argument>
-          <argument>App\Controller\ClientController</argument>
-          <argument>App\Controller\ClientProgramsController</argument>
-          <argument>App\Controller\ClientSessionController</argument>
-          <argument>App\Controller\EqipmentController</argument>
-          <argument>App\Controller\PaymentsController</argument>
-          <argument>App\Controller\ProgramsController</argument>
-          <argument>App\Controller\SessionController</argument>
-          <argument>App\Controller\TrainersController</argument>
           <argument>Doctrine\Bundle\DoctrineBundle\Controller\ProfilerController</argument>
         </argument>
       </call>
@@ -7170,9 +7160,6 @@
     </service>
     <service id=".errored..service_locator.y4_Zrx..Symfony\Component\Config\Loader\LoaderInterface" class="Symfony\Component\Config\Loader\LoaderInterface">
       <tag name="container.error" message="Cannot autowire service &quot;.service_locator.y4_Zrx.&quot;: it needs an instance of &quot;Symfony\Component\Config\Loader\LoaderInterface&quot; but this type has been excluded from autowiring."/>
-    </service>
-    <service id=".errored..service_locator.sLMGPaz.App\Entity\Programs" class="App\Entity\Programs">
-      <tag name="container.error" message="Cannot autowire service &quot;.service_locator.sLMGPaz&quot;: it needs an instance of &quot;App\Entity\Programs&quot; but this type has been excluded in &quot;config/services.yaml&quot;."/>
     </service>
     <service id=".console.command.about.lazy" class="Symfony\Component\Console\Command\LazyCommand">
       <argument>about</argument>
@@ -8116,18 +8103,18 @@
     <service id="container.env_var_processors_locator" alias=".service_locator.w7.f4fT" public="true"/>
     <service id="api_platform.name_converter" alias="api_platform.hydra.name_converter.hydra_prefix"/>
     <service id="twig.loader.filesystem" alias="twig.loader.native_filesystem"/>
-    <service id="argument_resolver.controller_locator" alias=".service_locator.6izWoeD"/>
+    <service id="argument_resolver.controller_locator" alias=".service_locator.HBdvAhp"/>
     <service id="twig.loader" alias="twig.loader.native_filesystem"/>
     <service id="doctrine.id_generator_locator" alias=".service_locator.KLVvNIq"/>
     <service id="Psr\Log\LoggerInterface" alias="logger"/>
     <service id=".service_locator.t8nXrpb" alias=".service_locator.oMvzdBJ"/>
     <service id=".service_locator.bnaLdkn" alias="api_platform.serializer_locator"/>
+    <service id=".service_locator.J2B4Czd" alias="api_platform.filter_locator"/>
     <service id=".service_locator.bJ.4HC5" alias=".service_locator.w7.f4fT"/>
-    <service id=".service_locator.SlgeMRN" alias=".service_locator.6izWoeD"/>
+    <service id=".service_locator.L.EDYUC" alias=".service_locator.HBdvAhp"/>
     <service id=".service_locator.BFrsqsn" alias=".service_locator.F9PKc.7"/>
     <service id=".service_locator.y6g9F6V" alias=".service_locator.ETldwrq"/>
     <service id=".service_locator.LMuqDDe" alias=".service_locator.VHsrTPK"/>
-    <service id=".service_locator.jUv.zyj" alias=".service_locator.O2p6Lk7"/>
     <service id="api_platform.metadata.resource.metadata_collection_factory.parameter.inner" alias="api_platform.metadata.resource.metadata_collection_factory.attributes"/>
     <service id="api_platform.validator.metadata.resource.metadata_collection_factory.parameter.inner" alias="api_platform.metadata.resource.metadata_collection_factory.parameter"/>
     <service id="api_platform.metadata.resource.name_collection_factory.php_file.inner" alias="api_platform.metadata.resource.name_collection_factory.xml"/>
@@ -8204,10 +8191,7 @@
     <service id="api_platform.metadata.property.name_collection_factory.cached.inner" alias="api_platform.metadata.property.name_collection_factory.yaml"/>
     <service id="api_platform.metadata.property.metadata_factory.cached.inner" alias="api_platform.json_schema.metadata.property.metadata_factory.schema"/>
     <service id="api_platform.metadata.resource.metadata_collection_factory.cached.inner" alias="api_platform.doctrine.orm.metadata.resource.metadata_collection_factory"/>
-    <service id=".service_locator.Xbsa8iG" alias="api_platform.filter_locator"/>
     <service id=".service_locator.gFlme_s" alias=".service_locator.y4_Zrx."/>
-    <service id=".service_locator.eDgDw1V" alias=".service_locator.sLMGPaz"/>
-    <service id=".service_locator.Q1z.f9O" alias=".service_locator.O2p6Lk7"/>
     <service id=".service_locator.KryVg_L" alias=".service_locator.Pc4BK4x"/>
     <service id=".service_locator._kIAbz1" alias=".service_locator.TpoC7U9"/>
     <service id=".service_locator..Fs8Kd7" alias=".service_locator.e_.xxAP"/>

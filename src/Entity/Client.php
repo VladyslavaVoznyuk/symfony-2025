@@ -2,13 +2,7 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\Patch;
-use ApiPlatform\Metadata\Delete;
-
+use App\Repository\ClientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,38 +11,58 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-#[ORM\Entity]
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\ApiFilter;
+use ApiPlatform\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Doctrine\Orm\Filter\OrderFilter;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+
+
+#[ORM\Entity(repositoryClass: ClientRepository::class)]
 #[ApiResource(
+    routePrefix: '/clients',
+    paginationItemsPerPage: 20,
+
     normalizationContext: ['groups' => ['client:read']],
     denormalizationContext: ['groups' => ['client:write']],
-)]
 
-#[GetCollection(
-    uriTemplate: '/clients',
-    normalizationContext: ['groups' => ['client:list']]
-)]
+    operations: [
 
-#[Post(
-    uriTemplate: '/clients',
-    denormalizationContext: ['groups' => ['client:write']],
-    normalizationContext: ['groups' => ['client:read']]
-)]
+        new GetCollection(
+            security: "is_granted('ROLE_ADMIN')",
+            normalizationContext: ['groups' => ['client:list', 'client:read']]
+        ),
 
-#[Get(
-    uriTemplate: '/clients/{id}',
-    normalizationContext: ['groups' => ['client:read']]
-)]
+        new Post(
+            security: "is_granted('ROLE_ADMIN')",
+        // processor: 'client.password_processor'
+        ),
 
-#[Patch(
-    uriTemplate: '/clients/{id}',
-    denormalizationContext: ['groups' => ['client:write']],
-    normalizationContext: ['groups' => ['client:read']]
-)]
+        new Get(
+            security: "is_granted('ROLE_USER')"
+        ),
 
-#[Delete(
-    uriTemplate: '/clients/{id}',
-)]
+        new Patch(
+            security: "is_granted('ROLE_ADMIN')",
+        // processor: 'client.password_processor'
+        ),
 
+        new Delete(
+            security: "is_granted('ROLE_ADMIN')"
+        ),
+    ]
+)]
+#[ApiFilter(SearchFilter::class, properties: [
+    'first_name' => 'partial',
+    'last_name' => 'partial',
+    'email' => 'exact',
+])]
+#[ApiFilter(OrderFilter::class, properties: ['id', 'last_name', 'email'])]
 class Client implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
